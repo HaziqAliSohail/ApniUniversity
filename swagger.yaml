@@ -1,0 +1,993 @@
+swagger: "2.0"
+info:
+  description: "Apni University is microservices based web application. It aims of the management of students and teachers of the Apni University. It includes the management of their academic as well as accounts details."
+  version: "1.0.0"
+  title: "Apni University"
+
+host: "localhost:8080"
+basePath: "/"
+schemes:
+  - "http"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+  - "integer"
+paths:
+  /teacher:
+    post:
+      operationId: "addTeacher"
+      parameters:
+        - in: "body"
+          name: "teacher"
+          description: "Teacher Registration Data"
+          required: true
+          schema:
+            $ref: "#/definitions/Teacher"
+      responses:
+        201:
+          description: "Teacher registered Successfully!"
+          schema:
+            $ref: "#/definitions/Teacher"
+        409:
+          description: "Teacher already exists"
+        500:
+          description: "Internal Server Error"
+    get:
+      operationId: "getTeachers"
+      description: "Get all Teachers"
+      responses:
+        200:
+          description: "Teachers' response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Teacher"
+        404:
+          description: "Teachers not found"
+        500:
+          description: "Internal server error"
+
+  /teacher/{ID}/name:
+    patch:
+      operationId: "updateTeacherName"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Teacher ID"
+          type: "integer"
+        - in: "body"
+          name: "name"
+          required: true
+          description: "Updated Name to be stored"
+          schema:
+            type: "object"
+            properties:
+              Name:
+                  type: "string"
+
+      responses:
+        200:
+          description: "Teacher updated"
+          schema:
+            type: "integer"
+            description: "The ID of the Teacher!"
+        404:
+          description: "Teacher not found!"
+        500:
+          description: "Internal Server Error"
+
+  /teacher/{ID}/subject:
+    patch:
+      operationId: "assignSubjectToTeacher"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Teacher ID"
+          type: "integer"
+        - in: "body"
+          name: "subject"
+          required: true
+          description: "The object containing ID of the subject to be assigned"
+          schema:
+            type: "object"
+            properties:
+              SubjectID:
+                type: "integer"
+      responses:
+        200:
+          description: "Subject assigned to Teacher"
+          schema:
+            type: "integer"
+            description: "The ID of the Teacher!"
+        404:
+          description: "Teacher not found!"
+        500:
+          description: "Internal Server Error"
+
+  /teacher/{ID}/class:
+    get:
+      operationId: "getClassOfTeacher"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Teacher"
+      responses:
+        200:
+          description: "Teacher's Class response"
+          schema:
+            $ref: "#/definitions/Class"
+        404:
+          description: "Class not found"
+        500:
+          description: "Internal server error"
+
+  /teacher/{ID}/students:
+    get:
+      operationId: "getStudentsOfTeacher"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Teacher"
+      responses:
+        200:
+          description: "Teacher's Students response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+        404:
+          description: "Teacher not found"
+        500:
+          description: "Internal server error"
+
+  /teacher/{ID}:
+    delete:
+      operationId: "deleteTeacher"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Teacher"
+          required: true
+      responses:
+        204:
+          description: "Teacher Deleted Successfully!"
+        404:
+          description: "Teacher not found"
+        500:
+          description: "Internal server error"
+    get:
+      operationId: "getTeacherByID"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Teacher"
+          required: true
+      responses:
+        200:
+          description: "Teacher response"
+          schema:
+            $ref: "#/definitions/Teacher"
+        404:
+          description: "Teacher not found"
+        500:
+          description: "Internal server error"
+
+
+  /subject:
+    post:
+      operationId: "addSubject"
+      parameters:
+        - in: "body"
+          name: "subject"
+          description: "Subject to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/Subject"
+      responses:
+        201:
+          description: "Subject added Successfully"
+          schema:
+            $ref: "#/definitions/Subject"
+        409:
+          description: "Subject already exists"
+        500:
+          description: "Internal server error"
+    get:
+      operationId: "getSubject"
+      description: "Get all Subjects"
+      responses:
+        200:
+          description: "Subjects' response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Subject"
+        404:
+          description: "Subjects not found"
+        500:
+          description: "Internal server error"
+
+  /subject/{ID}/name:
+    patch:
+      operationId: "updateSubjectName"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Subject ID"
+          type: "integer"
+        - in: "body"
+          name: "name"
+          required: true
+          description: "Updated Name to be stored"
+          schema:
+            type: "object"
+            properties:
+              Name:
+                type: "string"
+
+      responses:
+        200:
+          description: "Subject Name updated Successfully!"
+          schema:
+            type: "integer"
+            description: "The ID of the Subject!"
+        404:
+          description: "Subject not found!"
+        500:
+          description: "Internal Server Error"
+
+  /subject/{ID}/class:
+    patch:
+      operationId: "assignClass"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Subject ID"
+          type: "integer"
+        - in: "body"
+          name: "class"
+          required: true
+          description: "The object containing ID of the class to be assigned"
+          schema:
+            type: "object"
+            properties:
+              ClassID:
+                type: "integer"
+      responses:
+        200:
+          description: "Subject assigned to Class"
+          schema:
+            type: "integer"
+            description: "The ID of the Subject!"
+        404:
+          description: "Subject Not found!"
+        500:
+          description: "Internal Server Error"
+
+  /subject/{ID}/teacher:
+    get:
+      operationId: "getTeachersOfSubject"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Subject"
+      responses:
+        200:
+          description: "Subject's Teachers response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Teacher"
+        404:
+          description: "Subject not found"
+        500:
+          description: "Internal server error"
+
+  /subject/{ID}/students:
+    get:
+      operationId: "getStudentsOfSubject"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Subject"
+      responses:
+        200:
+          description: "Subject's Students response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+        404:
+          description: "Subject not found"
+        500:
+          description: "Internal server error"
+
+  /subject/{ID}:
+    delete:
+      operationId: "deleteSubject"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Subject"
+          required: true
+      responses:
+        204:
+          description: "Subject Deleted Successfully!"
+        404:
+          description: "Subject not found"
+        500:
+          description: "Internal server error"
+    get:
+      operationId: "getSubjectByID"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Subject"
+          required: true
+      responses:
+        200:
+          description: "Subject response"
+          schema:
+            $ref: "#/definitions/Subject"
+        404:
+          description: "Subject not found"
+        500:
+          description: "Internal server error"
+
+  /student:
+    post:
+      operationId: "addStudent"
+      parameters:
+        - in: "body"
+          name: "student"
+          description: "Student to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/Student"
+      responses:
+        201:
+          description: "Student added Successfully"
+          schema:
+            $ref: "#/definitions/Student"
+        409:
+          description: "Student already exists"
+        500:
+          description: "Internal server error"
+
+    get:
+      operationId: "getStudent"
+      description: "Get all Students"
+      responses:
+        200:
+          description: "Students' response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+        404:
+          description: "Students not found"
+        500:
+          description: "Internal server error"
+
+  /student/{ID}/name:
+    patch:
+      operationId: "updateStudentName"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Student ID"
+          type: "integer"
+        - in: "body"
+          name: "name"
+          required: true
+          description: "Updated Name to be stored"
+          schema:
+            type: "object"
+            properties:
+              Name:
+                type: "string"
+      responses:
+        200:
+          description: "Student Name updated Successfully!"
+          schema:
+            type: "integer"
+            description: "The ID of the Student!"
+        404:
+          description: "Student not found!"
+        500:
+          description: "Internal Server Error"
+
+  /student/{ID}/gpa:
+    patch:
+      operationId: "updateGPA"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Student ID"
+          type: "integer"
+        - in: "body"
+          name: "gpa"
+          required: true
+          description: "The object containing gpa to be assigned"
+          schema:
+            type: "object"
+            properties:
+              GPA:
+                type: "number"
+      responses:
+        200:
+          description: "GPA assigned to Student"
+          schema:
+            type: "integer"
+            description: "The ID of the Student!"
+        404:
+          description: "Student Not found!"
+        500:
+          description: "Internal Server Error"
+
+  /student/{ID}/subject:
+    patch:
+      operationId: "assignSubjectToStudent"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Student ID"
+          type: "integer"
+        - in: "body"
+          name: "Subject"
+          required: true
+          description: "The object containing ID of subject to be assigned"
+          schema:
+            type: "object"
+            properties:
+              SubjectID:
+                type: "integer"
+              Assign:
+                type: "boolean"
+      responses:
+        200:
+          description: "Subject assigned to Student"
+          schema:
+            type: "integer"
+            description: "The ID of the Student!"
+        404:
+          description: "Student Not found!"
+        500:
+          description: "Internal Server Error"
+
+  /student/{ID}/classes:
+    get:
+      operationId: "getClassesOfStudent"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Student"
+      responses:
+        200:
+          description: "Student's Class as response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Class"
+        404:
+          description: "Student not found"
+        500:
+          description: "Internal server error"
+
+  /student/{ID}/subjects:
+    get:
+      operationId: "getSubjectsOfStudent"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Student"
+      responses:
+        200:
+          description: "Student's Subjects as response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Subject"
+        404:
+          description: "Student not found"
+        500:
+          description: "Internal server error"
+
+  /student/{ID}:
+    delete:
+      operationId: "deleteStudent"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Student"
+          required: true
+      responses:
+        204:
+          description: "Student Deleted Successfully!"
+        404:
+          description: "Student not found"
+        500:
+          description: "Internal server error"
+    get:
+      operationId: "getStudentByID"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Student"
+          required: true
+      responses:
+        200:
+          description: "Student response"
+          schema:
+            $ref: "#/definitions/Student"
+        404:
+          description: "Student not found"
+        500:
+          description: "Internal server error"
+
+
+  /class:
+    post:
+      operationId: "addClass"
+      parameters:
+        - in: "body"
+          name: "class"
+          description: "Class to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/Class"
+      responses:
+        201:
+          description: "Class added Successfully"
+          schema:
+            $ref: "#/definitions/Class"
+        409:
+          description: "Class already exists"
+        500:
+          description: "Internal server error"
+
+    get:
+      operationId: "getClass"
+      description: "Get all Classes"
+      responses:
+        200:
+          description: "Classes' response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Class"
+        404:
+          description: "Class not found"
+        500:
+          description: "Internal server error"
+
+  /class/{ID}/name:
+    patch:
+      operationId: "updateClassName"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Class ID"
+          type: "integer"
+        - in: "body"
+          name: "name"
+          required: true
+          description: "Updated Name to be stored"
+          schema:
+            type: "object"
+            properties:
+              Name:
+                type: "string"
+      responses:
+        200:
+          description: "Class Name updated Successfully!"
+          schema:
+            type: "integer"
+            description: "The ID of the Class!"
+        404:
+          description: "Class not found!"
+        500:
+          description: "Internal Server Error"
+
+  /class/{ID}/student/:
+    patch:
+      operationId: "addOrRemoveStudent"
+      parameters:
+        - in: "path"
+          name: "ID"
+          required: true
+          description: "Class ID"
+          type: "integer"
+        - in: "body"
+          name: "Student"
+          required: true
+          description: "The object containing ID of Student to be added or removed with operation"
+          schema:
+            type: "object"
+            properties:
+              SubjectID:
+                type: "integer"
+              Add:
+                type: "boolean"
+      responses:
+        200:
+          description: "Student added/removed to Class"
+          schema:
+            type: "integer"
+            description: "The ID of the Class!"
+        404:
+          description: "Class Not found!"
+        500:
+          description: "Internal Server Error"
+
+  /class/{ID}/subjects:
+    get:
+      operationId: "getSubjectsOfClass"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Class"
+      responses:
+        200:
+          description: "Class' Subjects as response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Subject"
+        404:
+          description: "Class not found"
+        500:
+          description: "Internal server error"
+
+  /class/{ID}/teachers:
+    get:
+      operationId: "getTeachersOfClass"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Class"
+      responses:
+        200:
+          description: "Class' Teachers as response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Teacher"
+        404:
+          description: "Class not found"
+        500:
+          description: "Internal server error"
+
+  /class/{ID}/Students:
+    get:
+      operationId: "getSStudentsOfClass"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          required: true
+          description: "The ID of the Class"
+      responses:
+        200:
+          description: "Class' Students as response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Student"
+        404:
+          description: "Class not found"
+        500:
+          description: "Internal server error"
+
+
+  /class/{ID}:
+    delete:
+      operationId: "deleteClass"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Class"
+          required: true
+      responses:
+        204:
+          description: "Class Deleted Successfully!"
+        404:
+          description: "Class not found"
+        500:
+          description: "Internal server error"
+    get:
+      operationId: "getClassByID"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Class"
+          required: true
+      responses:
+        200:
+          description: "Class response"
+          schema:
+            $ref: "#/definitions/Class"
+        404:
+          description: "Class not found"
+        500:
+          description: "Internal server error"
+
+  /account:
+    post:
+      operationId: "addAccount"
+      parameters:
+        - in: "body"
+          name: "account"
+          description: "Account to be added"
+          required: true
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        201:
+          description: "Account added Successfully"
+          schema:
+            $ref: "#/definitions/Account"
+        409:
+          description: "Account already exists"
+        500:
+          description: "Internal server error"
+    put:
+      operationId: "updateAccount"
+      parameters:
+        - in: "body"
+          name: "account"
+          required: true
+          description: "Account details"
+          schema:
+            $ref: "#/definitions/Account"
+      responses:
+        200:
+          description: "Account updated"
+          schema:
+            $ref: "#/definitions/Account"
+        404:
+          description: "Account not found!"
+        500:
+          description: "Internal Server Error"
+    get:
+      operationId: "getAccounts"
+      description: "Get all Accounts"
+      responses:
+        200:
+          description: "Accounts' response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Account"
+        404:
+          description: "Account not found"
+        500:
+          description: "Internal server error"
+
+  /acocunt/student:
+    get:
+      operationId: "getStudentAccounts"
+      description: "Get all Student Accounts"
+      responses:
+        200:
+          description: "Student Accounts' response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Account"
+        404:
+          description: "Student Account not found"
+        500:
+          description: "Internal server error"
+
+  /acocunt/student/default:
+    get:
+      operationId: "getDefaultedStudentAccounts"
+      description: "Get Defaulted Student Accounts"
+      responses:
+        200:
+          description: "Defaulted Student Accounts' response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Account"
+        404:
+          description: "Default Student Account not found"
+        500:
+          description: "Internal server error"
+
+  /acocunt/teacher:
+    get:
+      operationId: "getTeacherAccounts"
+      description: "Get all Teacher Accounts"
+      responses:
+        200:
+          description: "Teacher Accounts' response"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Account"
+        404:
+          description: "Teacher Account not found"
+        500:
+          description: "Internal server error"
+
+  /account/{ID}:
+    delete:
+      operationId: "deleteAccount"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Account"
+          required: true
+      responses:
+        204:
+          description: "Account Deleted Successfully!"
+        404:
+          description: "Account not found"
+        500:
+          description: "Internal server error"
+    get:
+      operationId: "getAccountByID"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "integer"
+          description: "ID of the Account"
+          required: true
+      responses:
+        200:
+          description: "Account response"
+          schema:
+            $ref: "#/definitions/Account"
+        404:
+          description: "Account not found"
+        500:
+          description: "Internal server error"
+
+
+definitions:
+  Teacher:
+    type: "object"
+    properties:
+      ID:
+        type: "integer"
+      Name:
+        type: "string"
+      SubjectID:
+        type: "integer"
+      CreatedAt:
+        type: "string"
+        format: "date-time"
+      UpdatedAt:
+        type: "string"
+        format: "date-time"
+
+  Subject:
+    type: "object"
+    properties:
+      ID:
+        type: "integer"
+      Name:
+        type: "string"
+      ClassID:
+        type: "integer"
+      CreatedAt:
+        type: "string"
+        format: "date-time"
+      UpdatedAt:
+        type: "string"
+        format: "date-time"
+
+  Student:
+    type: "object"
+    properties:
+      ID:
+        type: "integer"
+      Name:
+        type: "string"
+      GPA:
+        type: "number"
+      Subjects:
+        type: "array"
+        items:
+          type: "integer"
+        example: [1,2,3,4]
+      CreatedAt:
+        type: "string"
+        format: "date-time"
+      UpdatedAt:
+        type: "string"
+        format: "date-time"
+
+  Class:
+    type: "object"
+    properties:
+      ID:
+        type: "integer"
+      Name:
+        type: "string"
+      Students:
+        type: "array"
+        items:
+          type: "integer"
+        example: [ 1,2,3,4 ]
+      CreatedAt:
+        type: "string"
+        format: "date-time"
+      UpdatedAt:
+        type: "string"
+        format: "date-time"
+
+  Account:
+    type: "object"
+    properties:
+      ID:
+        type: "integer"
+      Name:
+        type: "string"
+      AccountType:
+        type: "string"
+      AccountData:
+        type: "object"
+      CreatedAt:
+        type: "string"
+        format: "date-time"
+      UpdatedAt:
+        type: "string"
+        format: "date-time"
+
+
+#  StudentAccount:
+#    type: "object"
+#    properties:
+#      StudentID:
+#        type: "integer"
+#      TotalInstallments:
+#        type: "integer"
+#      RemainingInstallments:
+#        type: "integer"
+#      IsDefaulter:
+#        type: "boolean"
+#
+#  TeacherAccount:
+#    type: "object"
+#    properties:
+#      TeacherID:
+#        type: "integer"
+#      Salary:
+#        type: "integer"
