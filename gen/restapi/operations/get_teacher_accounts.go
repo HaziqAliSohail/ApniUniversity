@@ -30,7 +30,7 @@ func NewGetTeacherAccounts(ctx *middleware.Context, handler GetTeacherAccountsHa
 }
 
 /*
-	GetTeacherAccounts swagger:route GET /acocunt/teacher getTeacherAccounts
+	GetTeacherAccounts swagger:route GET /account/teacher getTeacherAccounts
 
 Get all Teacher Accounts
 */

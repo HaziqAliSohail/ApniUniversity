@@ -116,6 +116,75 @@ func init() {
         }
       }
     },
+    "/account/student": {
+      "get": {
+        "description": "Get all Student Accounts",
+        "operationId": "getStudentAccounts",
+        "responses": {
+          "200": {
+            "description": "Student Accounts' response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Account"
+              }
+            }
+          },
+          "404": {
+            "description": "Student Account not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/account/student/default": {
+      "get": {
+        "description": "Get Defaulted Student Accounts",
+        "operationId": "getDefaultedStudentAccounts",
+        "responses": {
+          "200": {
+            "description": "Defaulted Student Accounts' response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Account"
+              }
+            }
+          },
+          "404": {
+            "description": "Default Student Account not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/account/teacher": {
+      "get": {
+        "description": "Get all Teacher Accounts",
+        "operationId": "getTeacherAccounts",
+        "responses": {
+          "200": {
+            "description": "Teacher Accounts' response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Account"
+              }
+            }
+          },
+          "404": {
+            "description": "Teacher Account not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/account/{ID}": {
       "get": {
         "operationId": "getAccountByID",
@@ -167,79 +236,10 @@ func init() {
         }
       }
     },
-    "/acocunt/student": {
-      "get": {
-        "description": "Get all Student Accounts",
-        "operationId": "getStudentAccounts",
-        "responses": {
-          "200": {
-            "description": "Student Accounts' response",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Account"
-              }
-            }
-          },
-          "404": {
-            "description": "Student Account not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/acocunt/student/default": {
-      "get": {
-        "description": "Get Defaulted Student Accounts",
-        "operationId": "getDefaultedStudentAccounts",
-        "responses": {
-          "200": {
-            "description": "Defaulted Student Accounts' response",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Account"
-              }
-            }
-          },
-          "404": {
-            "description": "Default Student Account not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/acocunt/teacher": {
-      "get": {
-        "description": "Get all Teacher Accounts",
-        "operationId": "getTeacherAccounts",
-        "responses": {
-          "200": {
-            "description": "Teacher Accounts' response",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Account"
-              }
-            }
-          },
-          "404": {
-            "description": "Teacher Account not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
     "/class": {
       "get": {
         "description": "Get all Classes",
-        "operationId": "getClass",
+        "operationId": "getClasses",
         "responses": {
           "200": {
             "description": "Classes' response",
@@ -340,7 +340,7 @@ func init() {
     },
     "/class/{ID}/Students": {
       "get": {
-        "operationId": "getSStudentsOfClass",
+        "operationId": "getStudentsOfClass",
         "parameters": [
           {
             "type": "integer",
@@ -434,7 +434,7 @@ func init() {
                 "Add": {
                   "type": "boolean"
                 },
-                "SubjectID": {
+                "StudentID": {
                   "type": "integer"
                 }
               }
@@ -523,7 +523,7 @@ func init() {
     "/student": {
       "get": {
         "description": "Get all Students",
-        "operationId": "getStudent",
+        "operationId": "getStudents",
         "responses": {
           "200": {
             "description": "Students' response",
@@ -770,7 +770,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Subject assigned to Student",
+            "description": "Subject assigned/de-assigned to Student",
             "schema": {
               "description": "The ID of the Student!",
               "type": "integer"
@@ -819,7 +819,7 @@ func init() {
     "/subject": {
       "get": {
         "description": "Get all Subjects",
-        "operationId": "getSubject",
+        "operationId": "getSubjects",
         "responses": {
           "200": {
             "description": "Subjects' response",
@@ -946,7 +946,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Subject assigned to Class",
+            "description": "Subject successfully assigned to Class",
             "schema": {
               "description": "The ID of the Subject!",
               "type": "integer"
@@ -1037,7 +1037,7 @@ func init() {
     },
     "/subject/{ID}/teacher": {
       "get": {
-        "operationId": "getTeachersOfSubject",
+        "operationId": "getTeacherOfSubject",
         "parameters": [
           {
             "type": "integer",
@@ -1049,12 +1049,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Subject's Teachers response",
+            "description": "Subject's Teacher as response",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Teacher"
-              }
+              "$ref": "#/definitions/Teacher"
             }
           },
           "404": {
@@ -1550,6 +1547,75 @@ func init() {
         }
       }
     },
+    "/account/student": {
+      "get": {
+        "description": "Get all Student Accounts",
+        "operationId": "getStudentAccounts",
+        "responses": {
+          "200": {
+            "description": "Student Accounts' response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Account"
+              }
+            }
+          },
+          "404": {
+            "description": "Student Account not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/account/student/default": {
+      "get": {
+        "description": "Get Defaulted Student Accounts",
+        "operationId": "getDefaultedStudentAccounts",
+        "responses": {
+          "200": {
+            "description": "Defaulted Student Accounts' response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Account"
+              }
+            }
+          },
+          "404": {
+            "description": "Default Student Account not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/account/teacher": {
+      "get": {
+        "description": "Get all Teacher Accounts",
+        "operationId": "getTeacherAccounts",
+        "responses": {
+          "200": {
+            "description": "Teacher Accounts' response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Account"
+              }
+            }
+          },
+          "404": {
+            "description": "Teacher Account not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
     "/account/{ID}": {
       "get": {
         "operationId": "getAccountByID",
@@ -1601,79 +1667,10 @@ func init() {
         }
       }
     },
-    "/acocunt/student": {
-      "get": {
-        "description": "Get all Student Accounts",
-        "operationId": "getStudentAccounts",
-        "responses": {
-          "200": {
-            "description": "Student Accounts' response",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Account"
-              }
-            }
-          },
-          "404": {
-            "description": "Student Account not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/acocunt/student/default": {
-      "get": {
-        "description": "Get Defaulted Student Accounts",
-        "operationId": "getDefaultedStudentAccounts",
-        "responses": {
-          "200": {
-            "description": "Defaulted Student Accounts' response",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Account"
-              }
-            }
-          },
-          "404": {
-            "description": "Default Student Account not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
-    "/acocunt/teacher": {
-      "get": {
-        "description": "Get all Teacher Accounts",
-        "operationId": "getTeacherAccounts",
-        "responses": {
-          "200": {
-            "description": "Teacher Accounts' response",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Account"
-              }
-            }
-          },
-          "404": {
-            "description": "Teacher Account not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
     "/class": {
       "get": {
         "description": "Get all Classes",
-        "operationId": "getClass",
+        "operationId": "getClasses",
         "responses": {
           "200": {
             "description": "Classes' response",
@@ -1774,7 +1771,7 @@ func init() {
     },
     "/class/{ID}/Students": {
       "get": {
-        "operationId": "getSStudentsOfClass",
+        "operationId": "getStudentsOfClass",
         "parameters": [
           {
             "type": "integer",
@@ -1868,7 +1865,7 @@ func init() {
                 "Add": {
                   "type": "boolean"
                 },
-                "SubjectID": {
+                "StudentID": {
                   "type": "integer"
                 }
               }
@@ -1957,7 +1954,7 @@ func init() {
     "/student": {
       "get": {
         "description": "Get all Students",
-        "operationId": "getStudent",
+        "operationId": "getStudents",
         "responses": {
           "200": {
             "description": "Students' response",
@@ -2204,7 +2201,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Subject assigned to Student",
+            "description": "Subject assigned/de-assigned to Student",
             "schema": {
               "description": "The ID of the Student!",
               "type": "integer"
@@ -2253,7 +2250,7 @@ func init() {
     "/subject": {
       "get": {
         "description": "Get all Subjects",
-        "operationId": "getSubject",
+        "operationId": "getSubjects",
         "responses": {
           "200": {
             "description": "Subjects' response",
@@ -2380,7 +2377,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Subject assigned to Class",
+            "description": "Subject successfully assigned to Class",
             "schema": {
               "description": "The ID of the Subject!",
               "type": "integer"
@@ -2471,7 +2468,7 @@ func init() {
     },
     "/subject/{ID}/teacher": {
       "get": {
-        "operationId": "getTeachersOfSubject",
+        "operationId": "getTeacherOfSubject",
         "parameters": [
           {
             "type": "integer",
@@ -2483,12 +2480,9 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Subject's Teachers response",
+            "description": "Subject's Teacher as response",
             "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Teacher"
-              }
+              "$ref": "#/definitions/Teacher"
             }
           },
           "404": {

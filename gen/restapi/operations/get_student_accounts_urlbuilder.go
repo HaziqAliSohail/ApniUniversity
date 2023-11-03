@@ -35,7 +35,7 @@ func (o *GetStudentAccountsURL) SetBasePath(bp string) {
 func (o *GetStudentAccountsURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/acocunt/student"
+	var _path = "/account/student"
 
 	_basePath := o._basePath
 	if _basePath == "" {

@@ -15,7 +15,7 @@ import (
 const AssignSubjectToStudentOKCode int = 200
 
 /*
-AssignSubjectToStudentOK Subject assigned to Student
+AssignSubjectToStudentOK Subject assigned/de-assigned to Student
 
 swagger:response assignSubjectToStudentOK
 */

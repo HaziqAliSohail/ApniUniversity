@@ -11,15 +11,15 @@ import (
 	golangswaggerpaths "path"
 )
 
-// GetDefaultedStudentAccountsURL generates an URL for the get defaulted student accounts operation
-type GetDefaultedStudentAccountsURL struct {
+// GetStudentsURL generates an URL for the get students operation
+type GetStudentsURL struct {
 	_basePath string
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *GetDefaultedStudentAccountsURL) WithBasePath(bp string) *GetDefaultedStudentAccountsURL {
+func (o *GetStudentsURL) WithBasePath(bp string) *GetStudentsURL {
 	o.SetBasePath(bp)
 	return o
 }
@@ -27,15 +27,15 @@ func (o *GetDefaultedStudentAccountsURL) WithBasePath(bp string) *GetDefaultedSt
 // SetBasePath sets the base path for this url builder, only required when it's different from the
 // base path specified in the swagger spec.
 // When the value of the base path is an empty string
-func (o *GetDefaultedStudentAccountsURL) SetBasePath(bp string) {
+func (o *GetStudentsURL) SetBasePath(bp string) {
 	o._basePath = bp
 }
 
 // Build a url path and query string
-func (o *GetDefaultedStudentAccountsURL) Build() (*url.URL, error) {
+func (o *GetStudentsURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/account/student/default"
+	var _path = "/student"
 
 	_basePath := o._basePath
 	if _basePath == "" {
@@ -47,7 +47,7 @@ func (o *GetDefaultedStudentAccountsURL) Build() (*url.URL, error) {
 }
 
 // Must is a helper function to panic when the url builder returns an error
-func (o *GetDefaultedStudentAccountsURL) Must(u *url.URL, err error) *url.URL {
+func (o *GetStudentsURL) Must(u *url.URL, err error) *url.URL {
 	if err != nil {
 		panic(err)
 	}
@@ -58,17 +58,17 @@ func (o *GetDefaultedStudentAccountsURL) Must(u *url.URL, err error) *url.URL {
 }
 
 // String returns the string representation of the path with query string
-func (o *GetDefaultedStudentAccountsURL) String() string {
+func (o *GetStudentsURL) String() string {
 	return o.Must(o.Build()).String()
 }
 
 // BuildFull builds a full url with scheme, host, path and query string
-func (o *GetDefaultedStudentAccountsURL) BuildFull(scheme, host string) (*url.URL, error) {
+func (o *GetStudentsURL) BuildFull(scheme, host string) (*url.URL, error) {
 	if scheme == "" {
-		return nil, errors.New("scheme is required for a full url on GetDefaultedStudentAccountsURL")
+		return nil, errors.New("scheme is required for a full url on GetStudentsURL")
 	}
 	if host == "" {
-		return nil, errors.New("host is required for a full url on GetDefaultedStudentAccountsURL")
+		return nil, errors.New("host is required for a full url on GetStudentsURL")
 	}
 
 	base, err := o.Build()
@@ -82,6 +82,6 @@ func (o *GetDefaultedStudentAccountsURL) BuildFull(scheme, host string) (*url.UR
 }
 
 // StringFull returns the string representation of a complete url
-func (o *GetDefaultedStudentAccountsURL) StringFull(scheme, host string) string {
+func (o *GetStudentsURL) StringFull(scheme, host string) string {
 	return o.Must(o.BuildFull(scheme, host)).String()
 }

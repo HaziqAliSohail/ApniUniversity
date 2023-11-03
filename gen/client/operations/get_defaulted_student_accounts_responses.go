@@ -42,7 +42,7 @@ func (o *GetDefaultedStudentAccountsReader) ReadResponse(response runtime.Client
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("[GET /acocunt/student/default] getDefaultedStudentAccounts", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /account/student/default] getDefaultedStudentAccounts", response, response.Code())
 	}
 }
 
@@ -91,11 +91,11 @@ func (o *GetDefaultedStudentAccountsOK) Code() int {
 }
 
 func (o *GetDefaultedStudentAccountsOK) Error() string {
-	return fmt.Sprintf("[GET /acocunt/student/default][%d] getDefaultedStudentAccountsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /account/student/default][%d] getDefaultedStudentAccountsOK  %+v", 200, o.Payload)
 }
 
 func (o *GetDefaultedStudentAccountsOK) String() string {
-	return fmt.Sprintf("[GET /acocunt/student/default][%d] getDefaultedStudentAccountsOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /account/student/default][%d] getDefaultedStudentAccountsOK  %+v", 200, o.Payload)
 }
 
 func (o *GetDefaultedStudentAccountsOK) GetPayload() []*models.Account {
@@ -156,11 +156,11 @@ func (o *GetDefaultedStudentAccountsNotFound) Code() int {
 }
 
 func (o *GetDefaultedStudentAccountsNotFound) Error() string {
-	return fmt.Sprintf("[GET /acocunt/student/default][%d] getDefaultedStudentAccountsNotFound ", 404)
+	return fmt.Sprintf("[GET /account/student/default][%d] getDefaultedStudentAccountsNotFound ", 404)
 }
 
 func (o *GetDefaultedStudentAccountsNotFound) String() string {
-	return fmt.Sprintf("[GET /acocunt/student/default][%d] getDefaultedStudentAccountsNotFound ", 404)
+	return fmt.Sprintf("[GET /account/student/default][%d] getDefaultedStudentAccountsNotFound ", 404)
 }
 
 func (o *GetDefaultedStudentAccountsNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -212,11 +212,11 @@ func (o *GetDefaultedStudentAccountsInternalServerError) Code() int {
 }
 
 func (o *GetDefaultedStudentAccountsInternalServerError) Error() string {
-	return fmt.Sprintf("[GET /acocunt/student/default][%d] getDefaultedStudentAccountsInternalServerError ", 500)
+	return fmt.Sprintf("[GET /account/student/default][%d] getDefaultedStudentAccountsInternalServerError ", 500)
 }
 
 func (o *GetDefaultedStudentAccountsInternalServerError) String() string {
-	return fmt.Sprintf("[GET /acocunt/student/default][%d] getDefaultedStudentAccountsInternalServerError ", 500)
+	return fmt.Sprintf("[GET /account/student/default][%d] getDefaultedStudentAccountsInternalServerError ", 500)
 }
 
 func (o *GetDefaultedStudentAccountsInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

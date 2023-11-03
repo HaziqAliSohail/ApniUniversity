@@ -66,8 +66,8 @@ type AddOrRemoveStudentBody struct {
 	// add
 	Add bool `json:"Add,omitempty"`
 
-	// subject ID
-	SubjectID int64 `json:"SubjectID,omitempty"`
+	// student ID
+	StudentID int64 `json:"StudentID,omitempty"`
 }
 
 // Validate validates this add or remove student body

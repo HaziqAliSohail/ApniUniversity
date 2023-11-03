@@ -30,7 +30,7 @@ func NewGetDefaultedStudentAccounts(ctx *middleware.Context, handler GetDefaulte
 }
 
 /*
-	GetDefaultedStudentAccounts swagger:route GET /acocunt/student/default getDefaultedStudentAccounts
+	GetDefaultedStudentAccounts swagger:route GET /account/student/default getDefaultedStudentAccounts
 
 Get Defaulted Student Accounts
 */

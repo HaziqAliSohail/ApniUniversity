@@ -202,7 +202,7 @@ paths:
         500:
           description: "Internal server error"
     get:
-      operationId: "getSubject"
+      operationId: "getSubjects"
       description: "Get all Subjects"
       responses:
         200:
@@ -266,7 +266,7 @@ paths:
                 type: "integer"
       responses:
         200:
-          description: "Subject assigned to Class"
+          description: "Subject successfully assigned to Class"
           schema:
             type: "integer"
             description: "The ID of the Subject!"
@@ -277,7 +277,7 @@ paths:
 
   /subject/{ID}/teacher:
     get:
-      operationId: "getTeachersOfSubject"
+      operationId: "getTeacherOfSubject"
       parameters:
         - in: "path"
           name: "ID"
@@ -286,11 +286,9 @@ paths:
           description: "The ID of the Subject"
       responses:
         200:
-          description: "Subject's Teachers response"
+          description: "Subject's Teacher as response"
           schema:
-            type: "array"
-            items:
-              $ref: "#/definitions/Teacher"
+            $ref: "#/definitions/Teacher"
         404:
           description: "Subject not found"
         500:
@@ -372,7 +370,7 @@ paths:
           description: "Internal server error"
 
     get:
-      operationId: "getStudent"
+      operationId: "getStudents"
       description: "Get all Students"
       responses:
         200:
@@ -466,7 +464,7 @@ paths:
                 type: "boolean"
       responses:
         200:
-          description: "Subject assigned to Student"
+          description: "Subject assigned/de-assigned to Student"
           schema:
             type: "integer"
             description: "The ID of the Student!"
@@ -573,7 +571,7 @@ paths:
           description: "Internal server error"
 
     get:
-      operationId: "getClass"
+      operationId: "getClasses"
       description: "Get all Classes"
       responses:
         200:
@@ -632,7 +630,7 @@ paths:
           schema:
             type: "object"
             properties:
-              SubjectID:
+              StudentID:
                 type: "integer"
               Add:
                 type: "boolean"
@@ -691,7 +689,7 @@ paths:
 
   /class/{ID}/Students:
     get:
-      operationId: "getSStudentsOfClass"
+      operationId: "getStudentsOfClass"
       parameters:
         - in: "path"
           name: "ID"
@@ -797,7 +795,7 @@ paths:
         500:
           description: "Internal server error"
 
-  /acocunt/student:
+  /account/student:
     get:
       operationId: "getStudentAccounts"
       description: "Get all Student Accounts"
@@ -813,7 +811,7 @@ paths:
         500:
           description: "Internal server error"
 
-  /acocunt/student/default:
+  /account/student/default:
     get:
       operationId: "getDefaultedStudentAccounts"
       description: "Get Defaulted Student Accounts"
@@ -829,7 +827,7 @@ paths:
         500:
           description: "Internal server error"
 
-  /acocunt/teacher:
+  /account/teacher:
     get:
       operationId: "getTeacherAccounts"
       description: "Get all Teacher Accounts"
