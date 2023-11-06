@@ -1,6 +1,7 @@
 package models
 
 import (
+	"ApniUniversity/data"
 	"reflect"
 	"testing"
 	"time"
@@ -26,7 +27,7 @@ func TestAccount_Map(test *testing.T) {
 			fields: accountFields{
 				ID:          3,
 				Name:        "Haziq",
-				AccountType: "student",
+				AccountType: data.STUDENT,
 				AccountData: &StudentAccount{StudentID: 2, TotalInstallments: 2, RemainingInstallments: 1, IsDefaulter: false},
 				CreatedAt:   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
 				UpdatedAt:   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
@@ -34,7 +35,7 @@ func TestAccount_Map(test *testing.T) {
 			want: map[string]interface{}{
 				"id":          3,
 				"name":        "Haziq",
-				"accountType": "student",
+				"accountType": data.STUDENT,
 				"accountData": map[string]interface{}{"studentID": 2, "totalInstallments": 2, "remainingInstallments": 1, "isDefaulter": false},
 				"createdAt":   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
 				"updatedAt":   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
@@ -45,7 +46,7 @@ func TestAccount_Map(test *testing.T) {
 			fields: accountFields{
 				ID:          2,
 				Name:        "Haziq",
-				AccountType: "teacher",
+				AccountType: data.TEACHER,
 				AccountData: &TeacherAccount{TeacherID: 2, Salary: 40000},
 				CreatedAt:   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
 				UpdatedAt:   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
@@ -53,7 +54,7 @@ func TestAccount_Map(test *testing.T) {
 			want: map[string]interface{}{
 				"id":          2,
 				"name":        "Haziq",
-				"accountType": "teacher",
+				"accountType": data.TEACHER,
 				"accountData": map[string]interface{}{"teacherID": 2, "salary": 40000},
 				"createdAt":   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
 				"updatedAt":   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
@@ -64,7 +65,7 @@ func TestAccount_Map(test *testing.T) {
 			fields: accountFields{
 				ID:          3,
 				Name:        "Ali",
-				AccountType: "student",
+				AccountType: data.STUDENT,
 				AccountData: &StudentAccount{},
 				CreatedAt:   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
 				UpdatedAt:   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
@@ -72,7 +73,7 @@ func TestAccount_Map(test *testing.T) {
 			want: map[string]interface{}{
 				"id":          3,
 				"name":        "Ali",
-				"accountType": "student",
+				"accountType": data.STUDENT,
 				"accountData": map[string]interface{}{"studentID": 0, "totalInstallments": 0, "remainingInstallments": 0, "isDefaulter": false},
 				"createdAt":   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
 				"updatedAt":   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
@@ -116,7 +117,7 @@ func TestAccount_GetNames(test *testing.T) {
 			fields: accountFields{
 				ID:          2,
 				Name:        "Haziq",
-				AccountType: "teacher",
+				AccountType: data.TEACHER,
 				AccountData: &TeacherAccount{TeacherID: 2, Salary: 40000},
 				CreatedAt:   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),
 				UpdatedAt:   time.Date(2023, 8, 17, 11, 43, 00, 00, time.UTC),

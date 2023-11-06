@@ -54,7 +54,7 @@ func NewAssignClassOK() *AssignClassOK {
 /*
 AssignClassOK describes a response with status code 200, with default header values.
 
-Subject assigned to Class
+Subject successfully assigned to Class
 */
 type AssignClassOK struct {
 	Payload int64

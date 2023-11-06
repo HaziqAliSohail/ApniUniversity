@@ -121,11 +121,6 @@ func configureAPI(api *operations.ApniUniversityAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.GetAccounts has not yet been implemented")
 		})
 	}
-	if api.GetClassHandler == nil {
-		api.GetClassHandler = operations.GetClassHandlerFunc(func(params operations.GetClassParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetClass has not yet been implemented")
-		})
-	}
 	if api.GetClassByIDHandler == nil {
 		api.GetClassByIDHandler = operations.GetClassByIDHandlerFunc(func(params operations.GetClassByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetClassByID has not yet been implemented")
@@ -134,6 +129,11 @@ func configureAPI(api *operations.ApniUniversityAPI) http.Handler {
 	if api.GetClassOfTeacherHandler == nil {
 		api.GetClassOfTeacherHandler = operations.GetClassOfTeacherHandlerFunc(func(params operations.GetClassOfTeacherParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetClassOfTeacher has not yet been implemented")
+		})
+	}
+	if api.GetClassesHandler == nil {
+		api.GetClassesHandler = operations.GetClassesHandlerFunc(func(params operations.GetClassesParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetClasses has not yet been implemented")
 		})
 	}
 	if api.GetClassesOfStudentHandler == nil {
@@ -146,16 +146,6 @@ func configureAPI(api *operations.ApniUniversityAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.GetDefaultedStudentAccounts has not yet been implemented")
 		})
 	}
-	if api.GetSStudentsOfClassHandler == nil {
-		api.GetSStudentsOfClassHandler = operations.GetSStudentsOfClassHandlerFunc(func(params operations.GetSStudentsOfClassParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetSStudentsOfClass has not yet been implemented")
-		})
-	}
-	if api.GetStudentHandler == nil {
-		api.GetStudentHandler = operations.GetStudentHandlerFunc(func(params operations.GetStudentParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetStudent has not yet been implemented")
-		})
-	}
 	if api.GetStudentAccountsHandler == nil {
 		api.GetStudentAccountsHandler = operations.GetStudentAccountsHandlerFunc(func(params operations.GetStudentAccountsParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetStudentAccounts has not yet been implemented")
@@ -164,6 +154,16 @@ func configureAPI(api *operations.ApniUniversityAPI) http.Handler {
 	if api.GetStudentByIDHandler == nil {
 		api.GetStudentByIDHandler = operations.GetStudentByIDHandlerFunc(func(params operations.GetStudentByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetStudentByID has not yet been implemented")
+		})
+	}
+	if api.GetStudentsHandler == nil {
+		api.GetStudentsHandler = operations.GetStudentsHandlerFunc(func(params operations.GetStudentsParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetStudents has not yet been implemented")
+		})
+	}
+	if api.GetStudentsOfClassHandler == nil {
+		api.GetStudentsOfClassHandler = operations.GetStudentsOfClassHandlerFunc(func(params operations.GetStudentsOfClassParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetStudentsOfClass has not yet been implemented")
 		})
 	}
 	if api.GetStudentsOfSubjectHandler == nil {
@@ -176,14 +176,14 @@ func configureAPI(api *operations.ApniUniversityAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.GetStudentsOfTeacher has not yet been implemented")
 		})
 	}
-	if api.GetSubjectHandler == nil {
-		api.GetSubjectHandler = operations.GetSubjectHandlerFunc(func(params operations.GetSubjectParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetSubject has not yet been implemented")
-		})
-	}
 	if api.GetSubjectByIDHandler == nil {
 		api.GetSubjectByIDHandler = operations.GetSubjectByIDHandlerFunc(func(params operations.GetSubjectByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetSubjectByID has not yet been implemented")
+		})
+	}
+	if api.GetSubjectsHandler == nil {
+		api.GetSubjectsHandler = operations.GetSubjectsHandlerFunc(func(params operations.GetSubjectsParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetSubjects has not yet been implemented")
 		})
 	}
 	if api.GetSubjectsOfClassHandler == nil {
@@ -206,6 +206,11 @@ func configureAPI(api *operations.ApniUniversityAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.GetTeacherByID has not yet been implemented")
 		})
 	}
+	if api.GetTeacherOfSubjectHandler == nil {
+		api.GetTeacherOfSubjectHandler = operations.GetTeacherOfSubjectHandlerFunc(func(params operations.GetTeacherOfSubjectParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetTeacherOfSubject has not yet been implemented")
+		})
+	}
 	if api.GetTeachersHandler == nil {
 		api.GetTeachersHandler = operations.GetTeachersHandlerFunc(func(params operations.GetTeachersParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetTeachers has not yet been implemented")
@@ -214,11 +219,6 @@ func configureAPI(api *operations.ApniUniversityAPI) http.Handler {
 	if api.GetTeachersOfClassHandler == nil {
 		api.GetTeachersOfClassHandler = operations.GetTeachersOfClassHandlerFunc(func(params operations.GetTeachersOfClassParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetTeachersOfClass has not yet been implemented")
-		})
-	}
-	if api.GetTeachersOfSubjectHandler == nil {
-		api.GetTeachersOfSubjectHandler = operations.GetTeachersOfSubjectHandlerFunc(func(params operations.GetTeachersOfSubjectParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetTeachersOfSubject has not yet been implemented")
 		})
 	}
 	if api.UpdateAccountHandler == nil {

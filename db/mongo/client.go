@@ -2,6 +2,7 @@ package mongo
 
 import (
 	"ApniUniversity/config"
+	"ApniUniversity/data"
 	"ApniUniversity/db"
 	"ApniUniversity/models"
 	"context"
@@ -439,12 +440,12 @@ func (c *client) GetAccount(id int) (*models.Account, error) {
 	account.CreatedAt = account.CreatedAt.In(utc).Round(time.Second)
 	account.UpdatedAt = account.UpdatedAt.In(utc).Round(time.Second)
 
-	if account.AccountType == "teacher" {
+	if account.AccountType == data.TEACHER {
 		var tData *models.TeacherAccount
 		dataBytes, _ := bson.Marshal(account.AccountData)
 		_ = bson.Unmarshal(dataBytes, &tData)
 		account.AccountData = tData
-	} else if account.AccountType == "student" {
+	} else if account.AccountType == data.STUDENT {
 		var sData *models.StudentAccount
 		dataBytes, _ := bson.Marshal(account.AccountData)
 		_ = bson.Unmarshal(dataBytes, &sData)
@@ -473,12 +474,12 @@ func (c *client) GetAccounts() ([]*models.Account, error) {
 	}
 
 	for _, account := range accounts {
-		if account.AccountType == "teacher" {
+		if account.AccountType == data.TEACHER {
 			var tData *models.TeacherAccount
 			dataBytes, _ := bson.Marshal(account.AccountData)
 			_ = bson.Unmarshal(dataBytes, &tData)
 			account.AccountData = tData
-		} else if account.AccountType == "student" {
+		} else if account.AccountType == data.STUDENT {
 			var sData *models.StudentAccount
 			dataBytes, _ := bson.Marshal(account.AccountData)
 			_ = bson.Unmarshal(dataBytes, &sData)

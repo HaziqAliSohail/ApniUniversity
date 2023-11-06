@@ -94,14 +94,14 @@ func NewApniUniversityAPI(spec *loads.Document) *ApniUniversityAPI {
 		GetAccountsHandler: GetAccountsHandlerFunc(func(params GetAccountsParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetAccounts has not yet been implemented")
 		}),
-		GetClassHandler: GetClassHandlerFunc(func(params GetClassParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetClass has not yet been implemented")
-		}),
 		GetClassByIDHandler: GetClassByIDHandlerFunc(func(params GetClassByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetClassByID has not yet been implemented")
 		}),
 		GetClassOfTeacherHandler: GetClassOfTeacherHandlerFunc(func(params GetClassOfTeacherParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetClassOfTeacher has not yet been implemented")
+		}),
+		GetClassesHandler: GetClassesHandlerFunc(func(params GetClassesParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetClasses has not yet been implemented")
 		}),
 		GetClassesOfStudentHandler: GetClassesOfStudentHandlerFunc(func(params GetClassesOfStudentParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetClassesOfStudent has not yet been implemented")
@@ -109,17 +109,17 @@ func NewApniUniversityAPI(spec *loads.Document) *ApniUniversityAPI {
 		GetDefaultedStudentAccountsHandler: GetDefaultedStudentAccountsHandlerFunc(func(params GetDefaultedStudentAccountsParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetDefaultedStudentAccounts has not yet been implemented")
 		}),
-		GetSStudentsOfClassHandler: GetSStudentsOfClassHandlerFunc(func(params GetSStudentsOfClassParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetSStudentsOfClass has not yet been implemented")
-		}),
-		GetStudentHandler: GetStudentHandlerFunc(func(params GetStudentParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetStudent has not yet been implemented")
-		}),
 		GetStudentAccountsHandler: GetStudentAccountsHandlerFunc(func(params GetStudentAccountsParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetStudentAccounts has not yet been implemented")
 		}),
 		GetStudentByIDHandler: GetStudentByIDHandlerFunc(func(params GetStudentByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetStudentByID has not yet been implemented")
+		}),
+		GetStudentsHandler: GetStudentsHandlerFunc(func(params GetStudentsParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetStudents has not yet been implemented")
+		}),
+		GetStudentsOfClassHandler: GetStudentsOfClassHandlerFunc(func(params GetStudentsOfClassParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetStudentsOfClass has not yet been implemented")
 		}),
 		GetStudentsOfSubjectHandler: GetStudentsOfSubjectHandlerFunc(func(params GetStudentsOfSubjectParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetStudentsOfSubject has not yet been implemented")
@@ -127,11 +127,11 @@ func NewApniUniversityAPI(spec *loads.Document) *ApniUniversityAPI {
 		GetStudentsOfTeacherHandler: GetStudentsOfTeacherHandlerFunc(func(params GetStudentsOfTeacherParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetStudentsOfTeacher has not yet been implemented")
 		}),
-		GetSubjectHandler: GetSubjectHandlerFunc(func(params GetSubjectParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetSubject has not yet been implemented")
-		}),
 		GetSubjectByIDHandler: GetSubjectByIDHandlerFunc(func(params GetSubjectByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetSubjectByID has not yet been implemented")
+		}),
+		GetSubjectsHandler: GetSubjectsHandlerFunc(func(params GetSubjectsParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetSubjects has not yet been implemented")
 		}),
 		GetSubjectsOfClassHandler: GetSubjectsOfClassHandlerFunc(func(params GetSubjectsOfClassParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetSubjectsOfClass has not yet been implemented")
@@ -145,14 +145,14 @@ func NewApniUniversityAPI(spec *loads.Document) *ApniUniversityAPI {
 		GetTeacherByIDHandler: GetTeacherByIDHandlerFunc(func(params GetTeacherByIDParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetTeacherByID has not yet been implemented")
 		}),
+		GetTeacherOfSubjectHandler: GetTeacherOfSubjectHandlerFunc(func(params GetTeacherOfSubjectParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetTeacherOfSubject has not yet been implemented")
+		}),
 		GetTeachersHandler: GetTeachersHandlerFunc(func(params GetTeachersParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetTeachers has not yet been implemented")
 		}),
 		GetTeachersOfClassHandler: GetTeachersOfClassHandlerFunc(func(params GetTeachersOfClassParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetTeachersOfClass has not yet been implemented")
-		}),
-		GetTeachersOfSubjectHandler: GetTeachersOfSubjectHandlerFunc(func(params GetTeachersOfSubjectParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetTeachersOfSubject has not yet been implemented")
 		}),
 		UpdateAccountHandler: UpdateAccountHandlerFunc(func(params UpdateAccountParams) middleware.Responder {
 			return middleware.NotImplemented("operation UpdateAccount has not yet been implemented")
@@ -243,32 +243,32 @@ type ApniUniversityAPI struct {
 	GetAccountByIDHandler GetAccountByIDHandler
 	// GetAccountsHandler sets the operation handler for the get accounts operation
 	GetAccountsHandler GetAccountsHandler
-	// GetClassHandler sets the operation handler for the get class operation
-	GetClassHandler GetClassHandler
 	// GetClassByIDHandler sets the operation handler for the get class by ID operation
 	GetClassByIDHandler GetClassByIDHandler
 	// GetClassOfTeacherHandler sets the operation handler for the get class of teacher operation
 	GetClassOfTeacherHandler GetClassOfTeacherHandler
+	// GetClassesHandler sets the operation handler for the get classes operation
+	GetClassesHandler GetClassesHandler
 	// GetClassesOfStudentHandler sets the operation handler for the get classes of student operation
 	GetClassesOfStudentHandler GetClassesOfStudentHandler
 	// GetDefaultedStudentAccountsHandler sets the operation handler for the get defaulted student accounts operation
 	GetDefaultedStudentAccountsHandler GetDefaultedStudentAccountsHandler
-	// GetSStudentsOfClassHandler sets the operation handler for the get s students of class operation
-	GetSStudentsOfClassHandler GetSStudentsOfClassHandler
-	// GetStudentHandler sets the operation handler for the get student operation
-	GetStudentHandler GetStudentHandler
 	// GetStudentAccountsHandler sets the operation handler for the get student accounts operation
 	GetStudentAccountsHandler GetStudentAccountsHandler
 	// GetStudentByIDHandler sets the operation handler for the get student by ID operation
 	GetStudentByIDHandler GetStudentByIDHandler
+	// GetStudentsHandler sets the operation handler for the get students operation
+	GetStudentsHandler GetStudentsHandler
+	// GetStudentsOfClassHandler sets the operation handler for the get students of class operation
+	GetStudentsOfClassHandler GetStudentsOfClassHandler
 	// GetStudentsOfSubjectHandler sets the operation handler for the get students of subject operation
 	GetStudentsOfSubjectHandler GetStudentsOfSubjectHandler
 	// GetStudentsOfTeacherHandler sets the operation handler for the get students of teacher operation
 	GetStudentsOfTeacherHandler GetStudentsOfTeacherHandler
-	// GetSubjectHandler sets the operation handler for the get subject operation
-	GetSubjectHandler GetSubjectHandler
 	// GetSubjectByIDHandler sets the operation handler for the get subject by ID operation
 	GetSubjectByIDHandler GetSubjectByIDHandler
+	// GetSubjectsHandler sets the operation handler for the get subjects operation
+	GetSubjectsHandler GetSubjectsHandler
 	// GetSubjectsOfClassHandler sets the operation handler for the get subjects of class operation
 	GetSubjectsOfClassHandler GetSubjectsOfClassHandler
 	// GetSubjectsOfStudentHandler sets the operation handler for the get subjects of student operation
@@ -277,12 +277,12 @@ type ApniUniversityAPI struct {
 	GetTeacherAccountsHandler GetTeacherAccountsHandler
 	// GetTeacherByIDHandler sets the operation handler for the get teacher by ID operation
 	GetTeacherByIDHandler GetTeacherByIDHandler
+	// GetTeacherOfSubjectHandler sets the operation handler for the get teacher of subject operation
+	GetTeacherOfSubjectHandler GetTeacherOfSubjectHandler
 	// GetTeachersHandler sets the operation handler for the get teachers operation
 	GetTeachersHandler GetTeachersHandler
 	// GetTeachersOfClassHandler sets the operation handler for the get teachers of class operation
 	GetTeachersOfClassHandler GetTeachersOfClassHandler
-	// GetTeachersOfSubjectHandler sets the operation handler for the get teachers of subject operation
-	GetTeachersOfSubjectHandler GetTeachersOfSubjectHandler
 	// UpdateAccountHandler sets the operation handler for the update account operation
 	UpdateAccountHandler UpdateAccountHandler
 	// UpdateClassNameHandler sets the operation handler for the update class name operation
@@ -423,14 +423,14 @@ func (o *ApniUniversityAPI) Validate() error {
 	if o.GetAccountsHandler == nil {
 		unregistered = append(unregistered, "GetAccountsHandler")
 	}
-	if o.GetClassHandler == nil {
-		unregistered = append(unregistered, "GetClassHandler")
-	}
 	if o.GetClassByIDHandler == nil {
 		unregistered = append(unregistered, "GetClassByIDHandler")
 	}
 	if o.GetClassOfTeacherHandler == nil {
 		unregistered = append(unregistered, "GetClassOfTeacherHandler")
+	}
+	if o.GetClassesHandler == nil {
+		unregistered = append(unregistered, "GetClassesHandler")
 	}
 	if o.GetClassesOfStudentHandler == nil {
 		unregistered = append(unregistered, "GetClassesOfStudentHandler")
@@ -438,17 +438,17 @@ func (o *ApniUniversityAPI) Validate() error {
 	if o.GetDefaultedStudentAccountsHandler == nil {
 		unregistered = append(unregistered, "GetDefaultedStudentAccountsHandler")
 	}
-	if o.GetSStudentsOfClassHandler == nil {
-		unregistered = append(unregistered, "GetSStudentsOfClassHandler")
-	}
-	if o.GetStudentHandler == nil {
-		unregistered = append(unregistered, "GetStudentHandler")
-	}
 	if o.GetStudentAccountsHandler == nil {
 		unregistered = append(unregistered, "GetStudentAccountsHandler")
 	}
 	if o.GetStudentByIDHandler == nil {
 		unregistered = append(unregistered, "GetStudentByIDHandler")
+	}
+	if o.GetStudentsHandler == nil {
+		unregistered = append(unregistered, "GetStudentsHandler")
+	}
+	if o.GetStudentsOfClassHandler == nil {
+		unregistered = append(unregistered, "GetStudentsOfClassHandler")
 	}
 	if o.GetStudentsOfSubjectHandler == nil {
 		unregistered = append(unregistered, "GetStudentsOfSubjectHandler")
@@ -456,11 +456,11 @@ func (o *ApniUniversityAPI) Validate() error {
 	if o.GetStudentsOfTeacherHandler == nil {
 		unregistered = append(unregistered, "GetStudentsOfTeacherHandler")
 	}
-	if o.GetSubjectHandler == nil {
-		unregistered = append(unregistered, "GetSubjectHandler")
-	}
 	if o.GetSubjectByIDHandler == nil {
 		unregistered = append(unregistered, "GetSubjectByIDHandler")
+	}
+	if o.GetSubjectsHandler == nil {
+		unregistered = append(unregistered, "GetSubjectsHandler")
 	}
 	if o.GetSubjectsOfClassHandler == nil {
 		unregistered = append(unregistered, "GetSubjectsOfClassHandler")
@@ -474,14 +474,14 @@ func (o *ApniUniversityAPI) Validate() error {
 	if o.GetTeacherByIDHandler == nil {
 		unregistered = append(unregistered, "GetTeacherByIDHandler")
 	}
+	if o.GetTeacherOfSubjectHandler == nil {
+		unregistered = append(unregistered, "GetTeacherOfSubjectHandler")
+	}
 	if o.GetTeachersHandler == nil {
 		unregistered = append(unregistered, "GetTeachersHandler")
 	}
 	if o.GetTeachersOfClassHandler == nil {
 		unregistered = append(unregistered, "GetTeachersOfClassHandler")
-	}
-	if o.GetTeachersOfSubjectHandler == nil {
-		unregistered = append(unregistered, "GetTeachersOfSubjectHandler")
 	}
 	if o.UpdateAccountHandler == nil {
 		unregistered = append(unregistered, "UpdateAccountHandler")
@@ -658,10 +658,6 @@ func (o *ApniUniversityAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/class"] = NewGetClass(o.context, o.GetClassHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
 	o.handlers["GET"]["/class/{ID}"] = NewGetClassByID(o.context, o.GetClassByIDHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -670,27 +666,31 @@ func (o *ApniUniversityAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
+	o.handlers["GET"]["/class"] = NewGetClasses(o.context, o.GetClassesHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
 	o.handlers["GET"]["/student/{ID}/classes"] = NewGetClassesOfStudent(o.context, o.GetClassesOfStudentHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/acocunt/student/default"] = NewGetDefaultedStudentAccounts(o.context, o.GetDefaultedStudentAccountsHandler)
+	o.handlers["GET"]["/account/student/default"] = NewGetDefaultedStudentAccounts(o.context, o.GetDefaultedStudentAccountsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/class/{ID}/Students"] = NewGetSStudentsOfClass(o.context, o.GetSStudentsOfClassHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/student"] = NewGetStudent(o.context, o.GetStudentHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/acocunt/student"] = NewGetStudentAccounts(o.context, o.GetStudentAccountsHandler)
+	o.handlers["GET"]["/account/student"] = NewGetStudentAccounts(o.context, o.GetStudentAccountsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/student/{ID}"] = NewGetStudentByID(o.context, o.GetStudentByIDHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/student"] = NewGetStudents(o.context, o.GetStudentsHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/class/{ID}/Students"] = NewGetStudentsOfClass(o.context, o.GetStudentsOfClassHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -702,11 +702,11 @@ func (o *ApniUniversityAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/subject"] = NewGetSubject(o.context, o.GetSubjectHandler)
+	o.handlers["GET"]["/subject/{ID}"] = NewGetSubjectByID(o.context, o.GetSubjectByIDHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/subject/{ID}"] = NewGetSubjectByID(o.context, o.GetSubjectByIDHandler)
+	o.handlers["GET"]["/subject"] = NewGetSubjects(o.context, o.GetSubjectsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -718,11 +718,15 @@ func (o *ApniUniversityAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/acocunt/teacher"] = NewGetTeacherAccounts(o.context, o.GetTeacherAccountsHandler)
+	o.handlers["GET"]["/account/teacher"] = NewGetTeacherAccounts(o.context, o.GetTeacherAccountsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/teacher/{ID}"] = NewGetTeacherByID(o.context, o.GetTeacherByIDHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/subject/{ID}/teacher"] = NewGetTeacherOfSubject(o.context, o.GetTeacherOfSubjectHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
@@ -731,10 +735,6 @@ func (o *ApniUniversityAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/class/{ID}/teachers"] = NewGetTeachersOfClass(o.context, o.GetTeachersOfClassHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/subject/{ID}/teacher"] = NewGetTeachersOfSubject(o.context, o.GetTeachersOfSubjectHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}

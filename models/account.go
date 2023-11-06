@@ -1,6 +1,7 @@
 package models
 
 import (
+	"ApniUniversity/data"
 	"github.com/fatih/structs"
 	"time"
 )
@@ -27,7 +28,7 @@ type TeacherAccount struct {
 }
 
 func (c *Account) GetAccountTypes() []string {
-	return []string{"teacher", "student"}
+	return []string{data.TEACHER, data.STUDENT}
 }
 
 func (c *Account) Map() map[string]interface{} {

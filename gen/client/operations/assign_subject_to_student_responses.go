@@ -54,7 +54,7 @@ func NewAssignSubjectToStudentOK() *AssignSubjectToStudentOK {
 /*
 AssignSubjectToStudentOK describes a response with status code 200, with default header values.
 
-Subject assigned to Student
+Subject assigned/de-assigned to Student
 */
 type AssignSubjectToStudentOK struct {
 	Payload int64

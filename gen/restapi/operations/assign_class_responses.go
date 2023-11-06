@@ -15,7 +15,7 @@ import (
 const AssignClassOKCode int = 200
 
 /*
-AssignClassOK Subject assigned to Class
+AssignClassOK Subject successfully assigned to Class
 
 swagger:response assignClassOK
 */

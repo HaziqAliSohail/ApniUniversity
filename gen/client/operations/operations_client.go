@@ -62,31 +62,31 @@ type ClientService interface {
 
 	GetAccounts(params *GetAccountsParams, opts ...ClientOption) (*GetAccountsOK, error)
 
-	GetClass(params *GetClassParams, opts ...ClientOption) (*GetClassOK, error)
-
 	GetClassByID(params *GetClassByIDParams, opts ...ClientOption) (*GetClassByIDOK, error)
 
 	GetClassOfTeacher(params *GetClassOfTeacherParams, opts ...ClientOption) (*GetClassOfTeacherOK, error)
+
+	GetClasses(params *GetClassesParams, opts ...ClientOption) (*GetClassesOK, error)
 
 	GetClassesOfStudent(params *GetClassesOfStudentParams, opts ...ClientOption) (*GetClassesOfStudentOK, error)
 
 	GetDefaultedStudentAccounts(params *GetDefaultedStudentAccountsParams, opts ...ClientOption) (*GetDefaultedStudentAccountsOK, error)
 
-	GetSStudentsOfClass(params *GetSStudentsOfClassParams, opts ...ClientOption) (*GetSStudentsOfClassOK, error)
-
-	GetStudent(params *GetStudentParams, opts ...ClientOption) (*GetStudentOK, error)
-
 	GetStudentAccounts(params *GetStudentAccountsParams, opts ...ClientOption) (*GetStudentAccountsOK, error)
 
 	GetStudentByID(params *GetStudentByIDParams, opts ...ClientOption) (*GetStudentByIDOK, error)
+
+	GetStudents(params *GetStudentsParams, opts ...ClientOption) (*GetStudentsOK, error)
+
+	GetStudentsOfClass(params *GetStudentsOfClassParams, opts ...ClientOption) (*GetStudentsOfClassOK, error)
 
 	GetStudentsOfSubject(params *GetStudentsOfSubjectParams, opts ...ClientOption) (*GetStudentsOfSubjectOK, error)
 
 	GetStudentsOfTeacher(params *GetStudentsOfTeacherParams, opts ...ClientOption) (*GetStudentsOfTeacherOK, error)
 
-	GetSubject(params *GetSubjectParams, opts ...ClientOption) (*GetSubjectOK, error)
-
 	GetSubjectByID(params *GetSubjectByIDParams, opts ...ClientOption) (*GetSubjectByIDOK, error)
+
+	GetSubjects(params *GetSubjectsParams, opts ...ClientOption) (*GetSubjectsOK, error)
 
 	GetSubjectsOfClass(params *GetSubjectsOfClassParams, opts ...ClientOption) (*GetSubjectsOfClassOK, error)
 
@@ -96,11 +96,11 @@ type ClientService interface {
 
 	GetTeacherByID(params *GetTeacherByIDParams, opts ...ClientOption) (*GetTeacherByIDOK, error)
 
+	GetTeacherOfSubject(params *GetTeacherOfSubjectParams, opts ...ClientOption) (*GetTeacherOfSubjectOK, error)
+
 	GetTeachers(params *GetTeachersParams, opts ...ClientOption) (*GetTeachersOK, error)
 
 	GetTeachersOfClass(params *GetTeachersOfClassParams, opts ...ClientOption) (*GetTeachersOfClassOK, error)
-
-	GetTeachersOfSubject(params *GetTeachersOfSubjectParams, opts ...ClientOption) (*GetTeachersOfSubjectOK, error)
 
 	UpdateAccount(params *UpdateAccountParams, opts ...ClientOption) (*UpdateAccountOK, error)
 
@@ -726,44 +726,6 @@ func (a *Client) GetAccounts(params *GetAccountsParams, opts ...ClientOption) (*
 }
 
 /*
-GetClass Get all Classes
-*/
-func (a *Client) GetClass(params *GetClassParams, opts ...ClientOption) (*GetClassOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetClassParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "getClass",
-		Method:             "GET",
-		PathPattern:        "/class",
-		ProducesMediaTypes: []string{"application/json", "integer"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &GetClassReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetClassOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for getClass: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
-}
-
-/*
 GetClassByID get class by ID API
 */
 func (a *Client) GetClassByID(params *GetClassByIDParams, opts ...ClientOption) (*GetClassByIDOK, error) {
@@ -840,6 +802,44 @@ func (a *Client) GetClassOfTeacher(params *GetClassOfTeacherParams, opts ...Clie
 }
 
 /*
+GetClasses Get all Classes
+*/
+func (a *Client) GetClasses(params *GetClassesParams, opts ...ClientOption) (*GetClassesOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetClassesParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getClasses",
+		Method:             "GET",
+		PathPattern:        "/class",
+		ProducesMediaTypes: []string{"application/json", "integer"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GetClassesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetClassesOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getClasses: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
 GetClassesOfStudent get classes of student API
 */
 func (a *Client) GetClassesOfStudent(params *GetClassesOfStudentParams, opts ...ClientOption) (*GetClassesOfStudentOK, error) {
@@ -888,7 +888,7 @@ func (a *Client) GetDefaultedStudentAccounts(params *GetDefaultedStudentAccounts
 	op := &runtime.ClientOperation{
 		ID:                 "getDefaultedStudentAccounts",
 		Method:             "GET",
-		PathPattern:        "/acocunt/student/default",
+		PathPattern:        "/account/student/default",
 		ProducesMediaTypes: []string{"application/json", "integer"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -916,82 +916,6 @@ func (a *Client) GetDefaultedStudentAccounts(params *GetDefaultedStudentAccounts
 }
 
 /*
-GetSStudentsOfClass get s students of class API
-*/
-func (a *Client) GetSStudentsOfClass(params *GetSStudentsOfClassParams, opts ...ClientOption) (*GetSStudentsOfClassOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetSStudentsOfClassParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "getSStudentsOfClass",
-		Method:             "GET",
-		PathPattern:        "/class/{ID}/Students",
-		ProducesMediaTypes: []string{"application/json", "integer"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &GetSStudentsOfClassReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetSStudentsOfClassOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for getSStudentsOfClass: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
-}
-
-/*
-GetStudent Get all Students
-*/
-func (a *Client) GetStudent(params *GetStudentParams, opts ...ClientOption) (*GetStudentOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetStudentParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "getStudent",
-		Method:             "GET",
-		PathPattern:        "/student",
-		ProducesMediaTypes: []string{"application/json", "integer"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &GetStudentReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetStudentOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for getStudent: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
-}
-
-/*
 GetStudentAccounts Get all Student Accounts
 */
 func (a *Client) GetStudentAccounts(params *GetStudentAccountsParams, opts ...ClientOption) (*GetStudentAccountsOK, error) {
@@ -1002,7 +926,7 @@ func (a *Client) GetStudentAccounts(params *GetStudentAccountsParams, opts ...Cl
 	op := &runtime.ClientOperation{
 		ID:                 "getStudentAccounts",
 		Method:             "GET",
-		PathPattern:        "/acocunt/student",
+		PathPattern:        "/account/student",
 		ProducesMediaTypes: []string{"application/json", "integer"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -1064,6 +988,82 @@ func (a *Client) GetStudentByID(params *GetStudentByIDParams, opts ...ClientOpti
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for getStudentByID: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetStudents Get all Students
+*/
+func (a *Client) GetStudents(params *GetStudentsParams, opts ...ClientOption) (*GetStudentsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetStudentsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getStudents",
+		Method:             "GET",
+		PathPattern:        "/student",
+		ProducesMediaTypes: []string{"application/json", "integer"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GetStudentsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetStudentsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getStudents: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetStudentsOfClass get students of class API
+*/
+func (a *Client) GetStudentsOfClass(params *GetStudentsOfClassParams, opts ...ClientOption) (*GetStudentsOfClassOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetStudentsOfClassParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getStudentsOfClass",
+		Method:             "GET",
+		PathPattern:        "/class/{ID}/Students",
+		ProducesMediaTypes: []string{"application/json", "integer"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GetStudentsOfClassReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetStudentsOfClassOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getStudentsOfClass: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -1144,44 +1144,6 @@ func (a *Client) GetStudentsOfTeacher(params *GetStudentsOfTeacherParams, opts .
 }
 
 /*
-GetSubject Get all Subjects
-*/
-func (a *Client) GetSubject(params *GetSubjectParams, opts ...ClientOption) (*GetSubjectOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetSubjectParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "getSubject",
-		Method:             "GET",
-		PathPattern:        "/subject",
-		ProducesMediaTypes: []string{"application/json", "integer"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &GetSubjectReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetSubjectOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for getSubject: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
-}
-
-/*
 GetSubjectByID get subject by ID API
 */
 func (a *Client) GetSubjectByID(params *GetSubjectByIDParams, opts ...ClientOption) (*GetSubjectByIDOK, error) {
@@ -1216,6 +1178,44 @@ func (a *Client) GetSubjectByID(params *GetSubjectByIDParams, opts ...ClientOpti
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for getSubjectByID: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetSubjects Get all Subjects
+*/
+func (a *Client) GetSubjects(params *GetSubjectsParams, opts ...ClientOption) (*GetSubjectsOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetSubjectsParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getSubjects",
+		Method:             "GET",
+		PathPattern:        "/subject",
+		ProducesMediaTypes: []string{"application/json", "integer"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GetSubjectsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetSubjectsOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getSubjects: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -1306,7 +1306,7 @@ func (a *Client) GetTeacherAccounts(params *GetTeacherAccountsParams, opts ...Cl
 	op := &runtime.ClientOperation{
 		ID:                 "getTeacherAccounts",
 		Method:             "GET",
-		PathPattern:        "/acocunt/teacher",
+		PathPattern:        "/account/teacher",
 		ProducesMediaTypes: []string{"application/json", "integer"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http"},
@@ -1368,6 +1368,44 @@ func (a *Client) GetTeacherByID(params *GetTeacherByIDParams, opts ...ClientOpti
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for getTeacherByID: API contract not enforced by server. Client expected to get an error, but got: %T", result)
+	panic(msg)
+}
+
+/*
+GetTeacherOfSubject get teacher of subject API
+*/
+func (a *Client) GetTeacherOfSubject(params *GetTeacherOfSubjectParams, opts ...ClientOption) (*GetTeacherOfSubjectOK, error) {
+	// TODO: Validate the params before sending
+	if params == nil {
+		params = NewGetTeacherOfSubjectParams()
+	}
+	op := &runtime.ClientOperation{
+		ID:                 "getTeacherOfSubject",
+		Method:             "GET",
+		PathPattern:        "/subject/{ID}/teacher",
+		ProducesMediaTypes: []string{"application/json", "integer"},
+		ConsumesMediaTypes: []string{"application/json"},
+		Schemes:            []string{"http"},
+		Params:             params,
+		Reader:             &GetTeacherOfSubjectReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
+	}
+	for _, opt := range opts {
+		opt(op)
+	}
+
+	result, err := a.transport.Submit(op)
+	if err != nil {
+		return nil, err
+	}
+	success, ok := result.(*GetTeacherOfSubjectOK)
+	if ok {
+		return success, nil
+	}
+	// unexpected success response
+	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
+	msg := fmt.Sprintf("unexpected success response for getTeacherOfSubject: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
@@ -1444,44 +1482,6 @@ func (a *Client) GetTeachersOfClass(params *GetTeachersOfClassParams, opts ...Cl
 	// unexpected success response
 	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
 	msg := fmt.Sprintf("unexpected success response for getTeachersOfClass: API contract not enforced by server. Client expected to get an error, but got: %T", result)
-	panic(msg)
-}
-
-/*
-GetTeachersOfSubject get teachers of subject API
-*/
-func (a *Client) GetTeachersOfSubject(params *GetTeachersOfSubjectParams, opts ...ClientOption) (*GetTeachersOfSubjectOK, error) {
-	// TODO: Validate the params before sending
-	if params == nil {
-		params = NewGetTeachersOfSubjectParams()
-	}
-	op := &runtime.ClientOperation{
-		ID:                 "getTeachersOfSubject",
-		Method:             "GET",
-		PathPattern:        "/subject/{ID}/teacher",
-		ProducesMediaTypes: []string{"application/json", "integer"},
-		ConsumesMediaTypes: []string{"application/json"},
-		Schemes:            []string{"http"},
-		Params:             params,
-		Reader:             &GetTeachersOfSubjectReader{formats: a.formats},
-		Context:            params.Context,
-		Client:             params.HTTPClient,
-	}
-	for _, opt := range opts {
-		opt(op)
-	}
-
-	result, err := a.transport.Submit(op)
-	if err != nil {
-		return nil, err
-	}
-	success, ok := result.(*GetTeachersOfSubjectOK)
-	if ok {
-		return success, nil
-	}
-	// unexpected success response
-	// safeguard: normally, absent a default response, unknown success responses return an error above: so this is a codegen issue
-	msg := fmt.Sprintf("unexpected success response for getTeachersOfSubject: API contract not enforced by server. Client expected to get an error, but got: %T", result)
 	panic(msg)
 }
 
