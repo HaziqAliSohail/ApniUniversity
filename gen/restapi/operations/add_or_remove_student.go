@@ -33,7 +33,7 @@ func NewAddOrRemoveStudent(ctx *middleware.Context, handler AddOrRemoveStudentHa
 }
 
 /*
-	AddOrRemoveStudent swagger:route PATCH /class/{ID}/student/ addOrRemoveStudent
+	AddOrRemoveStudent swagger:route PATCH /class/{ID}/student addOrRemoveStudent
 
 AddOrRemoveStudent add or remove student API
 */

@@ -42,7 +42,7 @@ func (o *GetStudentsOfClassReader) ReadResponse(response runtime.ClientResponse,
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("[GET /class/{ID}/Students] getStudentsOfClass", response, response.Code())
+		return nil, runtime.NewAPIError("[GET /class/{ID}/students] getStudentsOfClass", response, response.Code())
 	}
 }
 
@@ -91,11 +91,11 @@ func (o *GetStudentsOfClassOK) Code() int {
 }
 
 func (o *GetStudentsOfClassOK) Error() string {
-	return fmt.Sprintf("[GET /class/{ID}/Students][%d] getStudentsOfClassOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /class/{ID}/students][%d] getStudentsOfClassOK  %+v", 200, o.Payload)
 }
 
 func (o *GetStudentsOfClassOK) String() string {
-	return fmt.Sprintf("[GET /class/{ID}/Students][%d] getStudentsOfClassOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /class/{ID}/students][%d] getStudentsOfClassOK  %+v", 200, o.Payload)
 }
 
 func (o *GetStudentsOfClassOK) GetPayload() []*models.Student {
@@ -156,11 +156,11 @@ func (o *GetStudentsOfClassNotFound) Code() int {
 }
 
 func (o *GetStudentsOfClassNotFound) Error() string {
-	return fmt.Sprintf("[GET /class/{ID}/Students][%d] getStudentsOfClassNotFound ", 404)
+	return fmt.Sprintf("[GET /class/{ID}/students][%d] getStudentsOfClassNotFound ", 404)
 }
 
 func (o *GetStudentsOfClassNotFound) String() string {
-	return fmt.Sprintf("[GET /class/{ID}/Students][%d] getStudentsOfClassNotFound ", 404)
+	return fmt.Sprintf("[GET /class/{ID}/students][%d] getStudentsOfClassNotFound ", 404)
 }
 
 func (o *GetStudentsOfClassNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -212,11 +212,11 @@ func (o *GetStudentsOfClassInternalServerError) Code() int {
 }
 
 func (o *GetStudentsOfClassInternalServerError) Error() string {
-	return fmt.Sprintf("[GET /class/{ID}/Students][%d] getStudentsOfClassInternalServerError ", 500)
+	return fmt.Sprintf("[GET /class/{ID}/students][%d] getStudentsOfClassInternalServerError ", 500)
 }
 
 func (o *GetStudentsOfClassInternalServerError) String() string {
-	return fmt.Sprintf("[GET /class/{ID}/Students][%d] getStudentsOfClassInternalServerError ", 500)
+	return fmt.Sprintf("[GET /class/{ID}/students][%d] getStudentsOfClassInternalServerError ", 500)
 }
 
 func (o *GetStudentsOfClassInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

@@ -1,9 +1,11 @@
 package models
 
 import (
-	"ApniUniversity/data"
-	"github.com/fatih/structs"
 	"time"
+
+	"github.com/fatih/structs"
+
+	"ApniUniversity/data"
 )
 
 type Account struct {

@@ -4,7 +4,6 @@ package restapi
 
 import (
 	"crypto/tls"
-	"io"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -36,9 +35,6 @@ func configureAPI(api *operations.ApniUniversityAPI) http.Handler {
 
 	api.JSONConsumer = runtime.JSONConsumer()
 
-	api.IntegerProducer = runtime.ProducerFunc(func(w io.Writer, data interface{}) error {
-		return errors.NotImplemented("integer producer has not yet been implemented")
-	})
 	api.JSONProducer = runtime.JSONProducer()
 
 	if api.AddAccountHandler == nil {

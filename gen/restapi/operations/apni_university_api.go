@@ -7,7 +7,6 @@ package operations
 
 import (
 	"fmt"
-	"io"
 	"net/http"
 	"strings"
 
@@ -41,9 +40,6 @@ func NewApniUniversityAPI(spec *loads.Document) *ApniUniversityAPI {
 
 		JSONConsumer: runtime.JSONConsumer(),
 
-		IntegerProducer: runtime.ProducerFunc(func(w io.Writer, data interface{}) error {
-			return errors.NotImplemented("integer producer has not yet been implemented")
-		}),
 		JSONProducer: runtime.JSONProducer(),
 
 		AddAccountHandler: AddAccountHandlerFunc(func(params AddAccountParams) middleware.Responder {
@@ -204,9 +200,6 @@ type ApniUniversityAPI struct {
 	//   - application/json
 	JSONConsumer runtime.Consumer
 
-	// IntegerProducer registers a producer for the following mime types:
-	//   - integer
-	IntegerProducer runtime.Producer
 	// JSONProducer registers a producer for the following mime types:
 	//   - application/json
 	JSONProducer runtime.Producer
@@ -368,9 +361,6 @@ func (o *ApniUniversityAPI) Validate() error {
 		unregistered = append(unregistered, "JSONConsumer")
 	}
 
-	if o.IntegerProducer == nil {
-		unregistered = append(unregistered, "IntegerProducer")
-	}
 	if o.JSONProducer == nil {
 		unregistered = append(unregistered, "JSONProducer")
 	}
@@ -547,8 +537,6 @@ func (o *ApniUniversityAPI) ProducersFor(mediaTypes []string) map[string]runtime
 	result := make(map[string]runtime.Producer, len(mediaTypes))
 	for _, mt := range mediaTypes {
 		switch mt {
-		case "integer":
-			result["integer"] = o.IntegerProducer
 		case "application/json":
 			result["application/json"] = o.JSONProducer
 		}
@@ -690,7 +678,7 @@ func (o *ApniUniversityAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/class/{ID}/Students"] = NewGetStudentsOfClass(o.context, o.GetStudentsOfClassHandler)
+	o.handlers["GET"]["/class/{ID}/students"] = NewGetStudentsOfClass(o.context, o.GetStudentsOfClassHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

@@ -1,11 +1,13 @@
 package service
 
 import (
-	"ApniUniversity/data"
-	"ApniUniversity/models"
 	"encoding/json"
+
 	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson"
+
+	"ApniUniversity/data"
+	"ApniUniversity/models"
 )
 
 func (s *Service) AddAccount(account *models.Account) (int, error) {
@@ -16,6 +18,33 @@ func (s *Service) AddAccount(account *models.Account) (int, error) {
 	}
 
 	account.ID = accounts[len(accounts)-1].ID + 1
+
+	if account.AccountType == data.TEACHER {
+		var tData *models.TeacherAccount
+		dataBytes, _ := bson.Marshal(account.AccountData)
+		_ = bson.Unmarshal(dataBytes, &tData)
+
+		if tData.TeacherID != 0 {
+			if _, err = s.db.GetTeacher(tData.TeacherID); err != nil {
+
+				return 0, err
+			}
+		}
+
+	} else if account.AccountType == data.STUDENT {
+		var sData *models.StudentAccount
+		dataBytes, _ := bson.Marshal(account.AccountData)
+		_ = bson.Unmarshal(dataBytes, &sData)
+		account.AccountData = sData
+
+		if sData.StudentID != 0 {
+			if _, err = s.db.GetStudent(sData.StudentID); err != nil {
+
+				return 0, err
+			}
+		}
+
+	}
 
 	return s.db.AddOrUpdateAccount(account)
 }
@@ -37,11 +66,27 @@ func (s *Service) UpdateAccount(account *models.Account) (int, error) {
 		dataBytes, _ := bson.Marshal(account.AccountData)
 		_ = bson.Unmarshal(dataBytes, &tData)
 		account.AccountData = tData
+
+		if tData.TeacherID != 0 {
+			if _, err = s.db.GetTeacher(tData.TeacherID); err != nil {
+
+				return 0, err
+			}
+		}
+
 	} else if account.AccountType == data.STUDENT {
 		var sData *models.StudentAccount
 		dataBytes, _ := bson.Marshal(account.AccountData)
 		_ = bson.Unmarshal(dataBytes, &sData)
 		account.AccountData = sData
+
+		if sData.StudentID != 0 {
+			if _, err = s.db.GetStudent(sData.StudentID); err != nil {
+
+				return 0, err
+			}
+		}
+
 	}
 
 	return s.db.AddOrUpdateAccount(account)

@@ -1,9 +1,12 @@
 package service
 
 import (
-	"ApniUniversity/models"
 	"encoding/json"
+
 	"github.com/pkg/errors"
+
+	"ApniUniversity/data"
+	"ApniUniversity/models"
 )
 
 func (s *Service) AddStudent(student *models.Student) (int, error) {
@@ -14,6 +17,16 @@ func (s *Service) AddStudent(student *models.Student) (int, error) {
 	}
 
 	student.ID = students[len(students)-1].ID + 1
+
+	if len(student.Subjects) > 0 {
+		for _, subjectID := range student.Subjects {
+
+			if _, err = s.db.GetSubject(subjectID); err != nil {
+
+				return 0, err
+			}
+		}
+	}
 
 	return s.db.AddOrUpdateStudent(student)
 }
@@ -149,8 +162,59 @@ func (s *Service) GetSubjectsOfStudent(id int) ([]*models.Subject, error) {
 }
 
 func (s *Service) DeleteStudent(id int) (string, error) {
+	message, err := s.db.DeleteStudent(id)
+	if err != nil {
+		return "", err
+	}
 
-	return s.db.DeleteStudent(id)
+	classes, err := s.db.GetClasses()
+	if err != nil {
+		return "", err
+	}
+
+	for _, class := range classes {
+		for i, studentID := range class.Students {
+			if studentID == id {
+				class.Students = append(class.Students[:i], class.Students[i+1:]...)
+				_, err := s.db.AddOrUpdateClass(class)
+				if err != nil {
+
+					return "", errors.Wrap(err, "Delete Student: Student not removed from the class!")
+				}
+
+				break
+			}
+
+		}
+	}
+
+	accounts, err := s.db.GetAccounts()
+	if err != nil {
+		return "", err
+	}
+
+	for _, account := range accounts {
+		if account.AccountType == data.STUDENT {
+			var accountData *models.StudentAccount
+			dBytes, _ := json.Marshal(account.AccountData)
+			_ = json.Unmarshal(dBytes, &accountData)
+
+			if accountData.StudentID == id {
+				accountData.StudentID = 0
+				account.AccountData = accountData
+
+				_, err = s.db.AddOrUpdateAccount(account)
+				if err != nil {
+
+					return "", err
+				}
+
+				break
+			}
+		}
+	}
+
+	return message, nil
 }
 
 func (s *Service) GetStudentByID(id int) (*models.Student, error) {
