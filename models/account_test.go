@@ -1,10 +1,11 @@
 package models
 
 import (
-	"ApniUniversity/data"
 	"reflect"
 	"testing"
 	"time"
+
+	"ApniUniversity/data"
 )
 
 func TestAccount_Map(test *testing.T) {

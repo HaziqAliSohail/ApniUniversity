@@ -42,7 +42,7 @@ func (o *AddOrRemoveStudentReader) ReadResponse(response runtime.ClientResponse,
 		}
 		return nil, result
 	default:
-		return nil, runtime.NewAPIError("[PATCH /class/{ID}/student/] addOrRemoveStudent", response, response.Code())
+		return nil, runtime.NewAPIError("[PATCH /class/{ID}/student] addOrRemoveStudent", response, response.Code())
 	}
 }
 
@@ -91,11 +91,11 @@ func (o *AddOrRemoveStudentOK) Code() int {
 }
 
 func (o *AddOrRemoveStudentOK) Error() string {
-	return fmt.Sprintf("[PATCH /class/{ID}/student/][%d] addOrRemoveStudentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /class/{ID}/student][%d] addOrRemoveStudentOK  %+v", 200, o.Payload)
 }
 
 func (o *AddOrRemoveStudentOK) String() string {
-	return fmt.Sprintf("[PATCH /class/{ID}/student/][%d] addOrRemoveStudentOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PATCH /class/{ID}/student][%d] addOrRemoveStudentOK  %+v", 200, o.Payload)
 }
 
 func (o *AddOrRemoveStudentOK) GetPayload() int64 {
@@ -156,11 +156,11 @@ func (o *AddOrRemoveStudentNotFound) Code() int {
 }
 
 func (o *AddOrRemoveStudentNotFound) Error() string {
-	return fmt.Sprintf("[PATCH /class/{ID}/student/][%d] addOrRemoveStudentNotFound ", 404)
+	return fmt.Sprintf("[PATCH /class/{ID}/student][%d] addOrRemoveStudentNotFound ", 404)
 }
 
 func (o *AddOrRemoveStudentNotFound) String() string {
-	return fmt.Sprintf("[PATCH /class/{ID}/student/][%d] addOrRemoveStudentNotFound ", 404)
+	return fmt.Sprintf("[PATCH /class/{ID}/student][%d] addOrRemoveStudentNotFound ", 404)
 }
 
 func (o *AddOrRemoveStudentNotFound) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -212,11 +212,11 @@ func (o *AddOrRemoveStudentInternalServerError) Code() int {
 }
 
 func (o *AddOrRemoveStudentInternalServerError) Error() string {
-	return fmt.Sprintf("[PATCH /class/{ID}/student/][%d] addOrRemoveStudentInternalServerError ", 500)
+	return fmt.Sprintf("[PATCH /class/{ID}/student][%d] addOrRemoveStudentInternalServerError ", 500)
 }
 
 func (o *AddOrRemoveStudentInternalServerError) String() string {
-	return fmt.Sprintf("[PATCH /class/{ID}/student/][%d] addOrRemoveStudentInternalServerError ", 500)
+	return fmt.Sprintf("[PATCH /class/{ID}/student][%d] addOrRemoveStudentInternalServerError ", 500)
 }
 
 func (o *AddOrRemoveStudentInternalServerError) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {

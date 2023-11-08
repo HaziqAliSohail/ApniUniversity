@@ -1,9 +1,11 @@
 package service
 
 import (
-	"ApniUniversity/models"
 	"encoding/json"
+
 	"github.com/pkg/errors"
+
+	"ApniUniversity/models"
 )
 
 func (s *Service) AddClass(class *models.Class) (int, error) {
@@ -14,6 +16,16 @@ func (s *Service) AddClass(class *models.Class) (int, error) {
 	}
 
 	class.ID = classes[len(classes)-1].ID + 1
+
+	if len(class.Students) > 0 {
+		for _, studentID := range class.Students {
+
+			if _, err = s.db.GetStudent(studentID); err != nil {
+
+				return 0, err
+			}
+		}
+	}
 
 	return s.db.AddOrUpdateClass(class)
 }
@@ -44,6 +56,11 @@ func (s *Service) AddOrRemoveStudent(id int, body map[string]interface{}) (int, 
 	var studentID int
 	sDataBytes, _ := json.Marshal(body["studentID"])
 	_ = json.Unmarshal(sDataBytes, &studentID)
+
+	if _, err = s.db.GetStudent(studentID); err != nil {
+
+		return 0, err
+	}
 
 	var add bool
 	dataBytes, _ := json.Marshal(body["add"])
@@ -116,11 +133,11 @@ func (s *Service) GetSubjectsOfClass(id int) ([]*models.Subject, error) {
 		}
 	}
 
-	if len(subjects) == 0 {
+	if len(classSubjects) == 0 {
 		return nil, errors.Errorf("No subjects registered in this class!")
 	}
 
-	return subjects, nil
+	return classSubjects, nil
 }
 
 func (s *Service) GetTeachersOfClass(id int) ([]*models.Teacher, error) {
@@ -171,8 +188,32 @@ func (s *Service) GetStudentsOfClass(id int) ([]*models.Student, error) {
 }
 
 func (s *Service) DeleteClass(id int) (string, error) {
+	message, err := s.db.DeleteClass(id)
+	if err != nil {
+		return "", err
+	}
 
-	return s.db.DeleteClass(id)
+	subjects, err := s.db.GetSubjects()
+	if err != nil {
+		return "", err
+	}
+
+	for _, subject := range subjects {
+		if subject.ClassID == id {
+			subject.ClassID = 0
+
+			_, err := s.db.AddOrUpdateSubject(subject)
+			if err != nil {
+
+				return "", errors.Wrap(err, "Delete Class: Class not removed from the Subject's Data!")
+			}
+
+			break
+		}
+
+	}
+
+	return message, nil
 }
 
 func (s *Service) GetClassByID(id int) (*models.Class, error) {

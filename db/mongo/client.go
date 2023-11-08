@@ -1,18 +1,20 @@
 package mongo
 
 import (
-	"ApniUniversity/config"
-	"ApniUniversity/data"
-	"ApniUniversity/db"
-	"ApniUniversity/models"
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"time"
+
+	"ApniUniversity/config"
+	"ApniUniversity/data"
+	"ApniUniversity/db"
+	"ApniUniversity/models"
 )
 
 const (

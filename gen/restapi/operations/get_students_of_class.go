@@ -30,7 +30,7 @@ func NewGetStudentsOfClass(ctx *middleware.Context, handler GetStudentsOfClassHa
 }
 
 /*
-	GetStudentsOfClass swagger:route GET /class/{ID}/Students getStudentsOfClass
+	GetStudentsOfClass swagger:route GET /class/{ID}/students getStudentsOfClass
 
 GetStudentsOfClass get students of class API
 */

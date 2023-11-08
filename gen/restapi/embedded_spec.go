@@ -22,8 +22,7 @@ func init() {
     "application/json"
   ],
   "produces": [
-    "application/json",
-    "integer"
+    "application/json"
   ],
   "schemes": [
     "http"
@@ -338,37 +337,6 @@ func init() {
         }
       }
     },
-    "/class/{ID}/Students": {
-      "get": {
-        "operationId": "getStudentsOfClass",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "The ID of the Class",
-            "name": "ID",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Class' Students as response",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Student"
-              }
-            }
-          },
-          "404": {
-            "description": "Class not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
     "/class/{ID}/name": {
       "patch": {
         "operationId": "updateClassName",
@@ -412,7 +380,7 @@ func init() {
         }
       }
     },
-    "/class/{ID}/student/": {
+    "/class/{ID}/student": {
       "patch": {
         "operationId": "addOrRemoveStudent",
         "parameters": [
@@ -454,6 +422,37 @@ func init() {
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/class/{ID}/students": {
+      "get": {
+        "operationId": "getStudentsOfClass",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "The ID of the Class",
+            "name": "ID",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Class' Students as response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Student"
+              }
+            }
+          },
+          "404": {
+            "description": "Class not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }
@@ -1453,8 +1452,7 @@ func init() {
     "application/json"
   ],
   "produces": [
-    "application/json",
-    "integer"
+    "application/json"
   ],
   "schemes": [
     "http"
@@ -1769,37 +1767,6 @@ func init() {
         }
       }
     },
-    "/class/{ID}/Students": {
-      "get": {
-        "operationId": "getStudentsOfClass",
-        "parameters": [
-          {
-            "type": "integer",
-            "description": "The ID of the Class",
-            "name": "ID",
-            "in": "path",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Class' Students as response",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/Student"
-              }
-            }
-          },
-          "404": {
-            "description": "Class not found"
-          },
-          "500": {
-            "description": "Internal server error"
-          }
-        }
-      }
-    },
     "/class/{ID}/name": {
       "patch": {
         "operationId": "updateClassName",
@@ -1843,7 +1810,7 @@ func init() {
         }
       }
     },
-    "/class/{ID}/student/": {
+    "/class/{ID}/student": {
       "patch": {
         "operationId": "addOrRemoveStudent",
         "parameters": [
@@ -1885,6 +1852,37 @@ func init() {
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/class/{ID}/students": {
+      "get": {
+        "operationId": "getStudentsOfClass",
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "The ID of the Class",
+            "name": "ID",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Class' Students as response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Student"
+              }
+            }
+          },
+          "404": {
+            "description": "Class not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         }
       }

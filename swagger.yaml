@@ -12,7 +12,7 @@ consumes:
   - "application/json"
 produces:
   - "application/json"
-  - "integer"
+
 paths:
   /teacher:
     post:
@@ -614,7 +614,7 @@ paths:
         500:
           description: "Internal Server Error"
 
-  /class/{ID}/student/:
+  /class/{ID}/student:
     patch:
       operationId: "addOrRemoveStudent"
       parameters:
@@ -687,7 +687,7 @@ paths:
         500:
           description: "Internal server error"
 
-  /class/{ID}/Students:
+  /class/{ID}/students:
     get:
       operationId: "getStudentsOfClass"
       parameters:

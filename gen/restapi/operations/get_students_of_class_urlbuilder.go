@@ -42,7 +42,7 @@ func (o *GetStudentsOfClassURL) SetBasePath(bp string) {
 func (o *GetStudentsOfClassURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/class/{ID}/Students"
+	var _path = "/class/{ID}/students"
 
 	id := swag.FormatInt64(o.ID)
 	if id != "" {

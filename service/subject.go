@@ -1,8 +1,9 @@
 package service
 
 import (
-	"ApniUniversity/models"
 	"github.com/pkg/errors"
+
+	"ApniUniversity/models"
 )
 
 func (s *Service) AddSubject(subject *models.Subject) (int, error) {
@@ -13,6 +14,13 @@ func (s *Service) AddSubject(subject *models.Subject) (int, error) {
 	}
 
 	subject.ID = subjects[len(subjects)-1].ID + 1
+
+	if subject.ClassID != 0 {
+		if _, err = s.db.GetClass(subject.ClassID); err != nil {
+
+			return 0, err
+		}
+	}
 
 	return s.db.AddOrUpdateSubject(subject)
 }
@@ -41,6 +49,13 @@ func (s *Service) AssignClass(id int, body map[string]int) (int, error) {
 	}
 
 	subject.ClassID = body["classID"]
+
+	if subject.ClassID != 0 {
+		if _, err = s.db.GetClass(subject.ClassID); err != nil {
+
+			return 0, err
+		}
+	}
 
 	return s.db.AddOrUpdateSubject(subject)
 }
@@ -96,8 +111,52 @@ func (s *Service) GetStudentsOfSubject(id int) ([]*models.Student, error) {
 }
 
 func (s *Service) DeleteSubject(id int) (string, error) {
+	message, err := s.db.DeleteSubject(id)
+	if err != nil {
+		return "", err
+	}
 
-	return s.db.DeleteSubject(id)
+	students, err := s.db.GetStudents()
+	if err != nil {
+		return "", err
+	}
+
+	for _, student := range students {
+		for i, subjectID := range student.Subjects {
+			if subjectID == id {
+				student.Subjects = append(student.Subjects[:i], student.Subjects[i+1:]...)
+				_, err := s.db.AddOrUpdateStudent(student)
+				if err != nil {
+
+					return "", errors.Wrap(err, "Delete Subject: Subject not removed from the student Data!")
+				}
+
+				break
+			}
+
+		}
+	}
+
+	teachers, err := s.db.GetTeachers()
+	if err != nil {
+		return "", err
+	}
+
+	for _, teacher := range teachers {
+		if teacher.SubjectID == id {
+			teacher.SubjectID = 0
+			_, err := s.db.AddOrUpdateTeacher(teacher)
+			if err != nil {
+
+				return "", errors.Wrap(err, "Delete Subject: Subject not removed from the Teacher's Data!")
+			}
+
+			break
+		}
+
+	}
+
+	return message, nil
 }
 
 func (s *Service) GetSubjectByID(id int) (*models.Subject, error) {

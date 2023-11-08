@@ -13,7 +13,6 @@
 //	  - application/json
 //
 //	Produces:
-//	  - integer
 //	  - application/json
 //
 // swagger:meta

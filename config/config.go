@@ -9,6 +9,9 @@ const (
 	DbName = "db.name"
 	DbHost = "db.ip"
 	DbPort = "db.port"
+
+	ServerHost = "server.host"
+	ServerPort = "server.port"
 )
 
 func init() {
@@ -16,8 +19,12 @@ func init() {
 	_ = viper.BindEnv(DbHost, "DB_HOST")
 	_ = viper.BindEnv(DbPort, "DB_PORT")
 
-	// defaults
+	// defaults Database
 	viper.SetDefault(DbName, "ApniUniversity")
 	viper.SetDefault(DbHost, "127.0.0.1")
 	viper.SetDefault(DbPort, "27017")
+
+	//Server
+	viper.SetDefault(ServerHost, "127.0.0.1")
+	viper.SetDefault(ServerPort, "8081")
 }
