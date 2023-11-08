@@ -1,4 +1,4 @@
-module ApniUniversity
+module github.com/HaziqAliSohail/ApniUniversity
 
 go 1.21.2
 

@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"ApniUniversity/db"
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/db"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 func Test_client_AddOrUpdateTeacher(test *testing.T) {

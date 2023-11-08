@@ -11,10 +11,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 
-	"ApniUniversity/config"
-	"ApniUniversity/data"
-	"ApniUniversity/db"
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/config"
+	"github.com/HaziqAliSohail/ApniUniversity/data"
+	"github.com/HaziqAliSohail/ApniUniversity/db"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 const (

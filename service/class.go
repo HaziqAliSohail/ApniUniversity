@@ -5,7 +5,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 func (s *Service) AddClass(class *models.Class) (int, error) {
@@ -15,7 +15,11 @@ func (s *Service) AddClass(class *models.Class) (int, error) {
 		return 0, err
 	}
 
-	class.ID = classes[len(classes)-1].ID + 1
+	if len(classes) != 0 {
+		class.ID = classes[len(classes)-1].ID + 1
+	} else {
+		class.ID = 1
+	}
 
 	if len(class.Students) > 0 {
 		for _, studentID := range class.Students {

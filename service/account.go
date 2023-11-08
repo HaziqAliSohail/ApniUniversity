@@ -6,8 +6,8 @@ import (
 	"github.com/pkg/errors"
 	"go.mongodb.org/mongo-driver/bson"
 
-	"ApniUniversity/data"
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/data"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 func (s *Service) AddAccount(account *models.Account) (int, error) {
@@ -17,7 +17,11 @@ func (s *Service) AddAccount(account *models.Account) (int, error) {
 		return 0, err
 	}
 
-	account.ID = accounts[len(accounts)-1].ID + 1
+	if len(accounts) != 0 {
+		account.ID = accounts[len(accounts)-1].ID + 1
+	} else {
+		account.ID = 1
+	}
 
 	if account.AccountType == data.TEACHER {
 		var tData *models.TeacherAccount

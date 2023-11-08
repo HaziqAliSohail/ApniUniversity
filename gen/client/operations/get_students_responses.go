@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"ApniUniversity/gen/models"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/models"
 )
 
 // GetStudentsReader is a Reader for the GetStudents structure.

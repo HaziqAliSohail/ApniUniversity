@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"ApniUniversity/gen/models"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/models"
 )
 
 // UpdateAccountReader is a Reader for the UpdateAccount structure.

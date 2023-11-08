@@ -6,9 +6,9 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
 
-	runtime "ApniUniversity"
-	"ApniUniversity/gen/models"
-	"ApniUniversity/gen/restapi/operations"
+	runtime "github.com/HaziqAliSohail/ApniUniversity"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/models"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/restapi/operations"
 )
 
 func NewGetStudentsOfTeacher(rt *runtime.Runtime) operations.GetStudentsOfTeacherHandler {
