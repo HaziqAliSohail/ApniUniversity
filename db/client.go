@@ -1,7 +1,7 @@
 package db
 
 import (
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 type DataStore interface {

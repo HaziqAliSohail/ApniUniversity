@@ -1,6 +1,6 @@
 package service
 
-import "ApniUniversity/db"
+import "github.com/HaziqAliSohail/ApniUniversity/db"
 
 type Service struct {
 	db db.DataStore

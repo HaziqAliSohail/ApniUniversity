@@ -19,6 +19,9 @@ func init() {
 	_ = viper.BindEnv(DbHost, "DB_HOST")
 	_ = viper.BindEnv(DbPort, "DB_PORT")
 
+	_ = viper.BindEnv(ServerHost, "SERVER_HOST")
+	_ = viper.BindEnv(ServerPort, "SERVER_PORT")
+
 	// defaults Database
 	viper.SetDefault(DbName, "ApniUniversity")
 	viper.SetDefault(DbHost, "127.0.0.1")

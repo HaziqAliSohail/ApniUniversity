@@ -5,7 +5,7 @@ import (
 
 	"github.com/fatih/structs"
 
-	"ApniUniversity/data"
+	"github.com/HaziqAliSohail/ApniUniversity/data"
 )
 
 type Account struct {

@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"ApniUniversity/gen/restapi/operations"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/restapi/operations"
 )
 
 //go:generate swagger generate server --target ../../gen --name ApniUniversity --spec ../../swagger.yaml --principal interface{} --exclude-main
