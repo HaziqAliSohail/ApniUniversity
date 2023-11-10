@@ -14,7 +14,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/validate"
 
-	"ApniUniversity/gen/models"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/models"
 )
 
 // NewAddClassParams creates a new AddClassParams object

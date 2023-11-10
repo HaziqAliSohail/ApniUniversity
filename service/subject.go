@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/pkg/errors"
 
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 func (s *Service) AddSubject(subject *models.Subject) (int, error) {
@@ -13,7 +13,11 @@ func (s *Service) AddSubject(subject *models.Subject) (int, error) {
 		return 0, err
 	}
 
-	subject.ID = subjects[len(subjects)-1].ID + 1
+	if len(subjects) != 0 {
+		subject.ID = subjects[len(subjects)-1].ID + 1
+	} else {
+		subject.ID = 1
+	}
 
 	if subject.ClassID != 0 {
 		if _, err = s.db.GetClass(subject.ClassID); err != nil {

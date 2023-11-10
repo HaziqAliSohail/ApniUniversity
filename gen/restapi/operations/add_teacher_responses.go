@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"ApniUniversity/gen/models"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/models"
 )
 
 // AddTeacherCreatedCode is the HTTP code returned for type AddTeacherCreated

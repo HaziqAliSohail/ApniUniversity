@@ -5,7 +5,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 func (s *Service) AddClass(class *models.Class) (int, error) {
@@ -15,7 +15,11 @@ func (s *Service) AddClass(class *models.Class) (int, error) {
 		return 0, err
 	}
 
-	class.ID = classes[len(classes)-1].ID + 1
+	if len(classes) != 0 {
+		class.ID = classes[len(classes)-1].ID + 1
+	} else {
+		class.ID = 1
+	}
 
 	if len(class.Students) > 0 {
 		for _, studentID := range class.Students {
@@ -91,6 +95,12 @@ func (s *Service) AddOrRemoveStudent(id int, body map[string]interface{}) (int, 
 
 					if subject.ClassID != id {
 						updatedSubjects = append(updatedSubjects, subject.ID)
+						student.Subjects = updatedSubjects
+						_, err := s.db.AddOrUpdateStudent(student)
+						if err != nil {
+
+							return 0, errors.Wrap(err, "Delete Student: Class Subject not removed from the student Data!")
+						}
 					}
 
 				}
@@ -100,7 +110,7 @@ func (s *Service) AddOrRemoveStudent(id int, body map[string]interface{}) (int, 
 			}
 		}
 
-		if removed == false {
+		if !removed {
 			return 0, errors.Errorf("Remove Student: Student not enrolled in this class!")
 		}
 	}

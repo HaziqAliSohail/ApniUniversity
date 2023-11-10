@@ -3,8 +3,8 @@ package service
 import (
 	"encoding/json"
 
-	"ApniUniversity/data"
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/data"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 func (s *Service) AddTeacher(teacher *models.Teacher) (int, error) {
@@ -14,7 +14,11 @@ func (s *Service) AddTeacher(teacher *models.Teacher) (int, error) {
 		return 0, err
 	}
 
-	teacher.ID = teachers[len(teachers)-1].ID + 1
+	if len(teachers) != 0 {
+		teacher.ID = teachers[len(teachers)-1].ID + 1
+	} else {
+		teacher.ID = 1
+	}
 
 	if teacher.SubjectID != 0 {
 		if _, err = s.db.GetSubject(teacher.SubjectID); err != nil {

@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"ApniUniversity/data"
+	"github.com/HaziqAliSohail/ApniUniversity/data"
 )
 
 func TestAccount_Map(test *testing.T) {

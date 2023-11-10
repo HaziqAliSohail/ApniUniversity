@@ -5,8 +5,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"ApniUniversity/data"
-	"ApniUniversity/models"
+	"github.com/HaziqAliSohail/ApniUniversity/data"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 func (s *Service) AddStudent(student *models.Student) (int, error) {
@@ -16,7 +16,11 @@ func (s *Service) AddStudent(student *models.Student) (int, error) {
 		return 0, err
 	}
 
-	student.ID = students[len(students)-1].ID + 1
+	if len(students) != 0 {
+		student.ID = students[len(students)-1].ID + 1
+	} else {
+		student.ID = 1
+	}
 
 	if len(student.Subjects) > 0 {
 		for _, subjectID := range student.Subjects {
@@ -98,7 +102,7 @@ func (s *Service) AssignSubjectToStudent(id int, body map[string]interface{}) (i
 			}
 		}
 
-		if added == false {
+		if !added {
 			return 0, errors.Errorf("Student must be already enrolled in the class, where the subject is being taught!")
 		}
 
@@ -112,7 +116,7 @@ func (s *Service) AssignSubjectToStudent(id int, body map[string]interface{}) (i
 			}
 		}
 
-		if removed == false {
+		if !removed {
 			return 0, errors.Errorf("Student not enrolled in this subject")
 		}
 	}

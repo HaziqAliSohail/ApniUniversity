@@ -15,7 +15,7 @@ import (
 	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"ApniUniversity/gen/models"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/models"
 )
 
 // NewAddTeacherParams creates a new AddTeacherParams object,

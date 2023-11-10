@@ -6,10 +6,10 @@ import (
 	"github.com/go-openapi/loads"
 	"github.com/spf13/viper"
 
-	runtime "ApniUniversity"
-	"ApniUniversity/config"
-	"ApniUniversity/gen/restapi"
-	"ApniUniversity/handlers"
+	runtime "github.com/HaziqAliSohail/ApniUniversity"
+	"github.com/HaziqAliSohail/ApniUniversity/config"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/restapi"
+	"github.com/HaziqAliSohail/ApniUniversity/handlers"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 	defer func(server *restapi.Server) {
 		err := server.Shutdown()
 		if err != nil {
-
+			panic(err)
 		}
 	}(server)
 

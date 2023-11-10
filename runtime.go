@@ -1,9 +1,9 @@
 package runtime
 
 import (
-	"ApniUniversity/db"
-	"ApniUniversity/db/mongo"
-	"ApniUniversity/service"
+	"github.com/HaziqAliSohail/ApniUniversity/db"
+	"github.com/HaziqAliSohail/ApniUniversity/db/mongo"
+	"github.com/HaziqAliSohail/ApniUniversity/service"
 )
 
 type Runtime struct {

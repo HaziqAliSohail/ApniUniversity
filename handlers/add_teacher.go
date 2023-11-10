@@ -5,9 +5,9 @@ import (
 
 	"github.com/go-openapi/runtime/middleware"
 
-	runtime "ApniUniversity"
-	"ApniUniversity/gen/restapi/operations"
-	"ApniUniversity/models"
+	runtime "github.com/HaziqAliSohail/ApniUniversity"
+	"github.com/HaziqAliSohail/ApniUniversity/gen/restapi/operations"
+	"github.com/HaziqAliSohail/ApniUniversity/models"
 )
 
 type addTeacher struct {
