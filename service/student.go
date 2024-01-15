@@ -102,7 +102,7 @@ func (s *Service) AssignSubjectToStudent(id int, body map[string]interface{}) (i
 			}
 		}
 
-		if added == false {
+		if !added {
 			return 0, errors.Errorf("Student must be already enrolled in the class, where the subject is being taught!")
 		}
 
@@ -116,7 +116,7 @@ func (s *Service) AssignSubjectToStudent(id int, body map[string]interface{}) (i
 			}
 		}
 
-		if removed == false {
+		if !removed {
 			return 0, errors.Errorf("Student not enrolled in this subject")
 		}
 	}

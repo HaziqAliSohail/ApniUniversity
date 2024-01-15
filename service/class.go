@@ -95,6 +95,12 @@ func (s *Service) AddOrRemoveStudent(id int, body map[string]interface{}) (int, 
 
 					if subject.ClassID != id {
 						updatedSubjects = append(updatedSubjects, subject.ID)
+						student.Subjects = updatedSubjects
+						_, err := s.db.AddOrUpdateStudent(student)
+						if err != nil {
+
+							return 0, errors.Wrap(err, "Delete Student: Class Subject not removed from the student Data!")
+						}
 					}
 
 				}
@@ -104,7 +110,7 @@ func (s *Service) AddOrRemoveStudent(id int, body map[string]interface{}) (int, 
 			}
 		}
 
-		if removed == false {
+		if !removed {
 			return 0, errors.Errorf("Remove Student: Student not enrolled in this class!")
 		}
 	}

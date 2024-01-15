@@ -29,7 +29,7 @@ func main() {
 	defer func(server *restapi.Server) {
 		err := server.Shutdown()
 		if err != nil {
-
+			panic(err)
 		}
 	}(server)
 

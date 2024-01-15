@@ -3,6 +3,8 @@ package mongo
 import (
 	"context"
 	"fmt"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"sync"
 	"time"
 
 	"github.com/pkg/errors"
@@ -30,19 +32,27 @@ type client struct {
 	connection *mongo.Client
 }
 
+var (
+	mongoClient *client
+	mongoOnce   sync.Once
+)
+
 // NewClient Initializing the Database Client using constructor method
 func NewClient(_ db.Options) (db.DataStore, error) {
-	uri := fmt.Sprintf("mongodb://%s:%s", viper.GetString(config.DbHost), viper.GetString(config.DbPort))
-	log().Infof("Initializing MongoDB At: %s", uri)
-	clientOptions := options.Client().ApplyURI(uri)
-	cli, err := mongo.Connect(context.Background(), clientOptions)
-	if err != nil {
-		panic(err)
-	}
+	mongoOnce.Do(func() {
+		uri := fmt.Sprintf("mongodb://%s:%s", viper.GetString(config.DbHost), viper.GetString(config.DbPort))
+		log().Infof("Initializing MongoDB At: %s", uri)
+		clientOptions := options.Client().ApplyURI(uri)
+		cli, err := mongo.Connect(context.Background(), clientOptions)
+		if err != nil {
+			panic(err)
+		}
 
-	fmt.Println("Successfully Connected to mongodb!")
+		fmt.Println("Successfully Connected to mongodb!")
+		mongoClient = &client{connection: cli}
+	})
 
-	return &client{connection: cli}, nil
+	return mongoClient, nil
 }
 
 // AddOrUpdateTeacher Adding a teacher to database or updating the already present teacher
@@ -66,7 +76,7 @@ func (c *client) AddOrUpdateTeacher(teacher *models.Teacher) (int, error) {
 
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(teacherCollection)
 
-	_, err := collection.UpdateOne(context.TODO(), bson.D{{"_id", teacher.ID}}, bson.D{{"$set", teacher}}, options.Update().SetUpsert(true))
+	_, err := collection.UpdateOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: teacher.ID}}, bson.D{primitive.E{Key: "$set", Value: teacher}}, options.Update().SetUpsert(true))
 	if err != nil {
 		return 0, errors.Wrap(err, "Teacher not Added/Updated!")
 	}
@@ -79,7 +89,7 @@ func (c *client) GetTeacher(id int) (*models.Teacher, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(teacherCollection)
 	var teacher *models.Teacher
 
-	err := collection.FindOne(context.TODO(), bson.D{{"_id", id}}).Decode(&teacher)
+	err := collection.FindOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}}).Decode(&teacher)
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "Teacher not Found!")
@@ -100,7 +110,7 @@ func (c *client) GetTeachers() ([]*models.Teacher, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(teacherCollection)
 	var teachers []*models.Teacher
 
-	teachersCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{{"_id", 1}}))
+	teachersCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{primitive.E{Key: "_id", Value: 1}}))
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "No Teachers' Data Found!")
@@ -120,7 +130,7 @@ func (c *client) GetTeachers() ([]*models.Teacher, error) {
 func (c *client) DeleteTeacher(id int) (string, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(teacherCollection)
 
-	_, err := collection.DeleteOne(context.TODO(), bson.D{{"_id", id}})
+	_, err := collection.DeleteOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}})
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return "", errors.Wrap(err, "Teacher not Found!")
@@ -129,7 +139,7 @@ func (c *client) DeleteTeacher(id int) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("Teacher Deleted Successfully!"), nil
+	return "Teacher Deleted Successfully!", nil
 }
 
 // AddOrUpdateSubject Adding a subject to database or updating the already present subject
@@ -153,7 +163,7 @@ func (c *client) AddOrUpdateSubject(subject *models.Subject) (int, error) {
 
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(subjectCollection)
 
-	_, err := collection.UpdateOne(context.TODO(), bson.D{{"_id", subject.ID}}, bson.D{{"$set", subject}}, options.Update().SetUpsert(true))
+	_, err := collection.UpdateOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: subject.ID}}, bson.D{primitive.E{Key: "$set", Value: subject}}, options.Update().SetUpsert(true))
 
 	if err != nil {
 		return 0, errors.Wrap(err, "Subject not added/updated!")
@@ -167,7 +177,7 @@ func (c *client) GetSubject(id int) (*models.Subject, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(subjectCollection)
 	var subject *models.Subject
 
-	err := collection.FindOne(context.TODO(), bson.D{{"_id", id}}).Decode(&subject)
+	err := collection.FindOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}}).Decode(&subject)
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "Subject not Found!")
@@ -188,7 +198,7 @@ func (c *client) GetSubjects() ([]*models.Subject, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(subjectCollection)
 	var subjects []*models.Subject
 
-	subjectsCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{{"_id", 1}}))
+	subjectsCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{primitive.E{Key: "_id", Value: 1}}))
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "No Subjects' Data Found!")
@@ -208,7 +218,7 @@ func (c *client) GetSubjects() ([]*models.Subject, error) {
 func (c *client) DeleteSubject(id int) (string, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(subjectCollection)
 
-	_, err := collection.DeleteOne(context.TODO(), bson.D{{"_id", id}})
+	_, err := collection.DeleteOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}})
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return "", errors.Wrap(err, "Subject not Found!")
@@ -217,7 +227,7 @@ func (c *client) DeleteSubject(id int) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("Subject Deleted Successfully!"), nil
+	return "Subject Deleted Successfully!", nil
 }
 
 // AddOrUpdateClass Adding a class to database or updating the already present class
@@ -241,7 +251,7 @@ func (c *client) AddOrUpdateClass(class *models.Class) (int, error) {
 
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(classCollection)
 
-	_, err := collection.UpdateOne(context.TODO(), bson.D{{"_id", class.ID}}, bson.D{{"$set", class}}, options.Update().SetUpsert(true))
+	_, err := collection.UpdateOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: class.ID}}, bson.D{primitive.E{Key: "$set", Value: class}}, options.Update().SetUpsert(true))
 	if err != nil {
 		return 0, errors.Wrap(err, "Class not Added/Updated!")
 	}
@@ -254,7 +264,7 @@ func (c *client) GetClass(id int) (*models.Class, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(classCollection)
 	var class *models.Class
 
-	err := collection.FindOne(context.TODO(), bson.D{{"_id", id}}).Decode(&class)
+	err := collection.FindOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}}).Decode(&class)
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "Class not Found!")
@@ -275,7 +285,7 @@ func (c *client) GetClasses() ([]*models.Class, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(classCollection)
 	var classes []*models.Class
 
-	classesCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{{"_id", 1}}))
+	classesCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{primitive.E{Key: "_id", Value: 1}}))
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "No Classes' Data Found!")
@@ -295,7 +305,7 @@ func (c *client) GetClasses() ([]*models.Class, error) {
 func (c *client) DeleteClass(id int) (string, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(classCollection)
 
-	_, err := collection.DeleteOne(context.TODO(), bson.D{{"_id", id}})
+	_, err := collection.DeleteOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}})
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return "", errors.Wrap(err, "Class not Found!")
@@ -304,7 +314,7 @@ func (c *client) DeleteClass(id int) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("Class Deleted Successfully!"), nil
+	return "Class Deleted Successfully!", nil
 }
 
 // AddOrUpdateStudent Adding a student to database or updating the already present student
@@ -328,7 +338,7 @@ func (c *client) AddOrUpdateStudent(student *models.Student) (int, error) {
 
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(studentCollection)
 
-	_, err := collection.UpdateOne(context.TODO(), bson.D{{"_id", student.ID}}, bson.D{{"$set", student}}, options.Update().SetUpsert(true))
+	_, err := collection.UpdateOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: student.ID}}, bson.D{primitive.E{Key: "$set", Value: student}}, options.Update().SetUpsert(true))
 	if err != nil {
 		return 0, errors.Wrap(err, "Student not Added/Updated!")
 	}
@@ -341,7 +351,7 @@ func (c *client) GetStudent(id int) (*models.Student, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(studentCollection)
 	var student *models.Student
 
-	err := collection.FindOne(context.TODO(), bson.D{{"_id", id}}).Decode(&student)
+	err := collection.FindOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}}).Decode(&student)
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "Student not Found!")
@@ -362,7 +372,7 @@ func (c *client) GetStudents() ([]*models.Student, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(studentCollection)
 	var students []*models.Student
 
-	studentsCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{{"_id", 1}}))
+	studentsCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{primitive.E{Key: "_id", Value: 1}}))
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "No Students' Data Found!")
@@ -383,7 +393,7 @@ func (c *client) GetStudents() ([]*models.Student, error) {
 func (c *client) DeleteStudent(id int) (string, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(studentCollection)
 
-	_, err := collection.DeleteOne(context.TODO(), bson.D{{"_id", id}})
+	_, err := collection.DeleteOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}})
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return "", errors.Wrap(err, "Student not Found!")
@@ -392,7 +402,7 @@ func (c *client) DeleteStudent(id int) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("Student Deleted Successfully!"), nil
+	return "Student Deleted Successfully!", nil
 }
 
 // AddOrUpdateAccount Adding an account to database or updating the already present account
@@ -416,7 +426,7 @@ func (c *client) AddOrUpdateAccount(account *models.Account) (int, error) {
 
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(accountCollection)
 
-	_, err := collection.UpdateOne(context.TODO(), bson.D{{"_id", account.ID}}, bson.D{{"$set", account}}, options.Update().SetUpsert(true))
+	_, err := collection.UpdateOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: account.ID}}, bson.D{primitive.E{Key: "$set", Value: account}}, options.Update().SetUpsert(true))
 	if err != nil {
 		return 0, errors.Wrap(err, "Account not Added/Updated!")
 	}
@@ -429,7 +439,7 @@ func (c *client) GetAccount(id int) (*models.Account, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(accountCollection)
 	var account *models.Account
 
-	err := collection.FindOne(context.TODO(), bson.D{{"_id", id}}).Decode(&account)
+	err := collection.FindOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}}).Decode(&account)
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "Account not Found!")
@@ -462,7 +472,7 @@ func (c *client) GetAccounts() ([]*models.Account, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(accountCollection)
 	var accounts []*models.Account
 
-	accountsCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{{"_id", 1}}))
+	accountsCursor, err := collection.Find(context.TODO(), bson.D{}, options.Find().SetSort(bson.D{primitive.E{Key: "_id", Value: 1}}))
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return nil, errors.Wrap(err, "No Accounts' Data Found!")
@@ -496,7 +506,7 @@ func (c *client) GetAccounts() ([]*models.Account, error) {
 func (c *client) DeleteAccount(id int) (string, error) {
 	collection := c.connection.Database(viper.GetString(config.DbName)).Collection(accountCollection)
 
-	_, err := collection.DeleteOne(context.TODO(), bson.D{{"_id", id}})
+	_, err := collection.DeleteOne(context.TODO(), bson.D{primitive.E{Key: "_id", Value: id}})
 	if err != nil {
 		if errors.Is(err, mongo.ErrNoDocuments) {
 			return "", errors.Wrap(err, "Account not Found!")
@@ -505,5 +515,5 @@ func (c *client) DeleteAccount(id int) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("Account Deleted Successfully!"), nil
+	return "Account Deleted Successfully!", nil
 }
